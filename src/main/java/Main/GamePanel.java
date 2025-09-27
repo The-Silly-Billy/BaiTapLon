@@ -1,6 +1,5 @@
 package Main;
 
-import GameObject.GameObject;
 import GameObject.Paddle;
 
 import javax.swing.JPanel;
