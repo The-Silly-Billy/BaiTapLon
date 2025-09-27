@@ -1,14 +1,15 @@
 package GameObject;
 
 public class GameObject {
-    private float x,y;                              // Vi tri tren man hinh
+    private int x,y;                              // Vi tri tren man hinh
+    private int speed;
     private int width, height;                    // Kich co vat the
 
-    public float getX() {
+    public int getX() {
         return x;
     }
 
-    public float getY() {
+    public int getY() {
         return y;
     }
 
@@ -19,7 +20,4 @@ public class GameObject {
     public int getH() {
         return height;
     }
-
-    public static void update() {}
-    public static void render() {}
 }

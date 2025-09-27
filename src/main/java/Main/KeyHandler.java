@@ -1,3 +1,5 @@
+package Main;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,10 +14,10 @@ public class KeyHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_A) {
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = true;
         }
-        if(code == KeyEvent.VK_D) {
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = true;
         }
     }
@@ -24,10 +26,10 @@ public class KeyHandler implements KeyListener{
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_A) {
+        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = false;
         }
-        if(code == KeyEvent.VK_D) {
+        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = false;
         }
     }

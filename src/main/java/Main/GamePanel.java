@@ -1,4 +1,7 @@
+package Main;
+
 import GameObject.GameObject;
+import GameObject.Paddle;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -6,16 +9,16 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable{
 
     //Cai dat pixel
-    final int originalTileSize = 16;                        // obj se trong 1 khung pixel 16x16
-    final int scale = 3;                                    // phong dai obj len 3 lan
-    final int tileSize = originalTileSize * scale;          // 48 pixel
+    public final int originalTileSize = 16;                         // 1 khung pixel 16x16
+    final int scale = 3;                                            // phong dai khung len 3 lan
+    public final int tileSize = originalTileSize * scale;           // 48 pixel
 
     // man hinh ti le 4:3
     final int maxScreenCol = 16;
     final int maxScreenRow = 12;
 
-    final int screenWidth = tileSize * maxScreenCol;        //768 pixels
-    final int screenHeight = tileSize * maxScreenRow;       //576 pixels
+    public final int screenWidth = tileSize * maxScreenCol;        //768 pixels
+    public final int screenHeight = tileSize * maxScreenRow;       //576 pixels
 
     //FPS
     int FPS = 60;
@@ -23,14 +26,17 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
+    //Player
+    Paddle paddle = new Paddle(this, keyH);
+
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
-        this.setDoubleBuffered(true);
+        this.setDoubleBuffered(true);       //de tim hieu them ^^
 
         this.addKeyListener(keyH);
-        this.setFocusable(true);
+        this.setFocusable(true);            //de tim hieu them ^^
 
     }
 
@@ -55,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             if(delta >= 1) {
-//                update();
+                update();
                 repaint();
                 delta--;
             }
@@ -63,8 +69,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    public void udpate() {
-
+    public void update() {
+        paddle.update();
     }
 
     //method me
@@ -73,9 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(100,100, tileSize, tileSize);
+        paddle.render(g2);
 
         g2.dispose();
     }
