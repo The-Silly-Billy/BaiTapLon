@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GameObject {
     public int posX,posY;
-    int width, height;
+    public int width, height;
     int speed;
 
     public static int isCollide(GameObject cir, GameObject rec) {

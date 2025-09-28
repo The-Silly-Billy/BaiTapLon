@@ -80,12 +80,35 @@ public class GamePanel extends JPanel implements Runnable{
         paddle.update();
         ball.update();
 
+        //Va cham voi pad
         int vaCham1 = GameObject.isCollide(ball, paddle);
 
+        //Sua lai thong so!!!!
         if(vaCham1 == 2) {
             ball.speedY = -ball.speedY;
+            if(ball.speedX > 0) {
+                if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + (paddle.width / 4)) {
+                    ball.speedX = -ball.speedX + 1;
+                    ball.speedY -= 2;
+                }
+                if(ball.posX >= paddle.posX + (paddle.width * 3 / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    ball.speedX += 2;
+                    ball.speedY += 1;
+                }
+            }
+            if(ball.speedX < 0) {
+                if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + (paddle.width / 4)) {
+                    ball.speedX -= 2;
+                    ball.speedY += 1;
+                }
+                if(ball.posX >= paddle.posX + (paddle.width * 3 / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    ball.speedX = -ball.speedX - 1;
+                    ball.speedY -= 2;
+                }
+            }
         }
 
+        //Va cham vs gach
         int vaChamGach = GameObject.isCollide(ball, brick);
 
         if(vaChamGach == 1 || vaChamGach == 3) {
