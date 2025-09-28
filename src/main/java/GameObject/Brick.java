@@ -18,13 +18,13 @@ public class Brick extends GameObject{
     }
 
     public void initPos() {
-        posX = (gp.screenWidth - width) / 2;
-        posY = gp.screenHeight / 3;
+        posX = (double) (gp.screenWidth - width) / 2;
+        posY = (double) gp.screenHeight / 3;
     }
 
     public void render(Graphics2D g2) {
         g2.setColor(Color.green);
 
-        g2.fillRect(posX, posY, width, height);
+        g2.fillRect((int) posX, (int) posY, width, height);
     }
 }

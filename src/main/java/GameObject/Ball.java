@@ -4,15 +4,20 @@ import Main.GamePanel;
 import Main.KeyHandler;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Ball extends GameObject{
 
     GamePanel gp;
     KeyHandler keyH;
 
+    Random rand = new Random();
+
     public int radius;
-    public int speedX, speedY;
     public boolean isPlay;
+    public int speed;
+    int angle;
+    public Vector2D move;
 
     public Ball(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -27,36 +32,39 @@ public class Ball extends GameObject{
     }
 
     public void initPos() {
-        posX = gp.screenWidth / 2;
-        posY = gp.screenHeight - 110;
+        posX = (double) gp.screenWidth / 2;
+        posY = (double) gp.screenHeight - 110;
 
-        speedX = speedY = 0;
+        speed = 4;
+        angle = rand.nextInt(61) + 60;
+
+        move = new Vector2D();
+
         isPlay = false;
     }
 
     public void update() {
         if(!isPlay && keyH.spacePressed) {
-            speedX = -2;
-            speedY = -4;
+            move.changeVal(speed, angle);
             isPlay = true;
         }
 
-        posX += speedX;
-        posY += speedY;
+        posX += move.x;
+        posY += move.y;
 
         if(posY - radius < 0) {
             posY = radius;
-            speedY = -speedY;
+            move.changeY();
         }
 
         if(posX < radius) {
             posX = radius;
-            speedX = -speedX;
+            move.changeX();
         }
 
         if(posX > gp.screenWidth - radius) {
             posX = gp.screenWidth - radius;
-            speedX = -speedX;
+            move.changeX();
         }
 
         //Di chuyen trai phai luc bat dau
@@ -67,11 +75,11 @@ public class Ball extends GameObject{
             if(keyH.leftPressed) {
                 posX -= 4;
             }
-            if(posX < (gp.originalTileSize * 4 - 4) / 2) {
-                posX = (gp.originalTileSize * 4 - 4) / 2;
+            if(posX < (double) (gp.originalTileSize * 4 - 4) / 2) {
+                posX = (double) (gp.originalTileSize * 4 - 4) / 2;
             }
-            if(posX > gp.screenWidth - (gp.originalTileSize * 4 - 4) / 2) {
-                posX = gp.screenWidth - (gp.originalTileSize * 4 - 4) / 2;
+            if(posX > gp.screenWidth - (double) (gp.originalTileSize * 4 - 4) / 2) {
+                posX = gp.screenWidth - (double) (gp.originalTileSize * 4 - 4) / 2;
             }
         }
     }
@@ -79,7 +87,7 @@ public class Ball extends GameObject{
     public void render(Graphics2D g2) {
         g2.setColor(Color.yellow);
 
-        g2.fillOval(posX - radius, posY - radius, width, height);
+        g2.fillOval((int) (posX - radius), (int) (posY - radius), width, height);
     }
 
 }

@@ -3,13 +3,13 @@ package GameObject;
 import java.awt.*;
 
 public class GameObject {
-    public int posX,posY;
+    public double posX,posY;
     public int width, height;
     int speed;
 
     public static int isCollide(GameObject cir, GameObject rec) {
-        int closeX = cir.posX;
-        int closeY = cir.posY;
+        double closeX = cir.posX;
+        double closeY = cir.posY;
         int r = cir.width / 2;
 
         //Xem xem ball nam o ben nao so voi gach/paddle
@@ -26,9 +26,9 @@ public class GameObject {
         }
 
         //Tinh khoang cach tu tam qua bong den canh gan nhat cua gach/paddle
-        int distX = closeX - cir.posX;
-        int distY = closeY - cir.posY;
-        int distance = (distX * distX) + (distY * distY);
+        double distX = closeX - cir.posX;
+        double distY = closeY - cir.posY;
+        double distance = (distX * distX) + (distY * distY);
 
         if(distance <= r * r) {
             if(distY == 0) {

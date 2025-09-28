@@ -21,8 +21,8 @@ public class Paddle extends GameObject {
     }
 
     public void initPos() {
-        posX = (gp.screenWidth - width) / 2;
-        posY = gp.screenHeight - 100;
+        posX = (double) (gp.screenWidth - width) / 2;
+        posY = (double) gp.screenHeight - 100;
 
         speed = 4;
     }
@@ -46,7 +46,7 @@ public class Paddle extends GameObject {
 
         g2.setColor(Color.white);
 
-        g2.fillRect(posX, posY, width, height);
+        g2.fillRect((int) posX, (int) posY, width, height);
     }
 
 }
