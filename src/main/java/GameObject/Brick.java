@@ -23,7 +23,7 @@ public class Brick extends GameObject{
     }
 
     public void render(Graphics2D g2) {
-        g2.setColor(Color.red);
+        g2.setColor(Color.green);
 
         g2.fillRect(posX, posY, width, height);
     }

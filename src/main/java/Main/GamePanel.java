@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Cai dat pixel
     public final int originalTileSize = 16;                         // 1 khung pixel 16x16
     final int scale = 3;                                            // phong dai khung len 3 lan
-    final int tileSize = originalTileSize * scale;           // 48 pixel
+    final int tileSize = originalTileSize * scale;                  // 48 pixel
 
     // man hinh ti le 4:3
     final int maxScreenCol = 16;
@@ -77,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-
         paddle.update();
         ball.update();
 
@@ -96,9 +95,13 @@ public class GamePanel extends JPanel implements Runnable{
             ball.speedY = -ball.speedY;
         }
 
+        if(ball.posY > screenHeight - ball.radius) {
+            ball.initPos();
+            paddle.initPos();
+        }
     }
 
-    //method me
+    //method ve
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 

@@ -3,7 +3,7 @@ package GameObject;
 import java.awt.*;
 
 public class GameObject {
-    int posX,posY;
+    public int posX,posY;
     int width, height;
     int speed;
 

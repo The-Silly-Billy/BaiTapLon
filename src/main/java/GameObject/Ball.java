@@ -10,7 +10,7 @@ public class Ball extends GameObject{
     GamePanel gp;
     KeyHandler keyH;
 
-    int radius;
+    public int radius;
     public int speedX, speedY;
     public boolean isPlay;
 
@@ -59,10 +59,7 @@ public class Ball extends GameObject{
             speedX = -speedX;
         }
 
-        if(posY > gp.screenHeight - radius) {
-            initPos();
-        }
-
+        //Di chuyen trai phai luc bat dau
         if(!isPlay) {
             if(keyH.rightPressed) {
                 posX += 4;
