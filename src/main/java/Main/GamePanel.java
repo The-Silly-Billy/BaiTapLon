@@ -1,9 +1,9 @@
 package Main;
 
+import GameObject.Brick.BrLv1;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
-import GameObject.Brick;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick
-    Brick brick = new Brick(this);
+    BrLv1 brLv1 = new BrLv1(this);
 
     public GamePanel() {
 
@@ -107,14 +107,15 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //Va cham vs gach
-        int vaChamGach = GameObject.isCollide(ball, brick);
+        int vaChamGach = GameObject.isCollide(ball, brLv1);
 
-        //BUGGGGGGGGGGGGGGG
         if(vaChamGach == 1 || vaChamGach == 3) {
             ball.move.changeX();
+            brLv1.takeHit();
         }
         if(vaChamGach == 2 || vaChamGach == 4) {
             ball.move.changeY();
+            brLv1.takeHit();
         }
 
         //Reset lai vi tri cu sau khi chet
@@ -132,7 +133,10 @@ public class GamePanel extends JPanel implements Runnable{
 
         paddle.render(g2);
         ball.render(g2);
-        brick.render(g2);
+
+        if(!brLv1.isDestroy()) {
+            brLv1.render(g2);
+        }
 
         g2.dispose();
     }

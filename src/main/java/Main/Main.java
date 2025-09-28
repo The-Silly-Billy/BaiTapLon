@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class Main {
     public static void main(String[] args) {
 
-        //Xem nta day cach dung SWING JAVAX trong video nay nhe =)))) May cai t code cx la tu video nay ra day
+        //Xem nta day cach dung SWING JAVAX trong video nay nheddd =)))) May cai t code cx la tu video nay ra day
         //https://www.youtube.com/watch?v=om59cwR7psI&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&index=1&ab_channel=RyiSnow
         
         //khoi tao window
@@ -31,13 +31,10 @@ public class Main {
 ----MOT SO THU CAN HOAN THANH----
 ---------------------------------
 
-1. Pad va Ball
-    - Doi cach va cham Ball vs Pad
-
 2. Brick
     - Them tinh nang bi vo cua gach
     - Them cac loai gach khac
-    - Khoi tao nhieu Gach luc bat dau
+    - Khoi tao nhieu Gach luc bat dau (Map.class)
 
 3. Mau
     - Them thong so dem mau, dem diem

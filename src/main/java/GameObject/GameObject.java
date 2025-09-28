@@ -1,7 +1,5 @@
 package GameObject;
 
-import java.awt.*;
-
 public class GameObject {
     public double posX,posY;
     public int width, height;
