@@ -1,6 +1,9 @@
 package Main;
 
+import GameObject.GameObject;
+import GameObject.Ball;
 import GameObject.Paddle;
+import GameObject.Brick;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -10,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Cai dat pixel
     public final int originalTileSize = 16;                         // 1 khung pixel 16x16
     final int scale = 3;                                            // phong dai khung len 3 lan
-    public final int tileSize = originalTileSize * scale;           // 48 pixel
+    final int tileSize = originalTileSize * scale;           // 48 pixel
 
     // man hinh ti le 4:3
     final int maxScreenCol = 16;
@@ -27,6 +30,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Player
     Paddle paddle = new Paddle(this, keyH);
+    //Ball
+    Ball ball = new Ball(this, keyH);
+    //Brick
+    Brick brick = new Brick(this);
 
     public GamePanel() {
 
@@ -69,7 +76,29 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
+
+
         paddle.update();
+        ball.update();
+
+        int vaCham1 = GameObject.isCollide(ball, paddle);
+
+        if(vaCham1 == 1 || vaCham1 == 3) {
+            ball.speedX = -ball.speedX;
+        }
+        if(vaCham1 == 2 || vaCham1 == 4) {
+            ball.speedY = -ball.speedY;
+        }
+
+        int vaChamGach = GameObject.isCollide(ball, brick);
+
+        if(vaChamGach == 1 || vaChamGach == 3) {
+            ball.speedX = -ball.speedX;
+        }
+        if(vaChamGach == 2 || vaChamGach == 4) {
+            ball.speedY = -ball.speedY;
+        }
+
     }
 
     //method me
@@ -79,6 +108,8 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
 
         paddle.render(g2);
+        ball.render(g2);
+        brick.render(g2);
 
         g2.dispose();
     }

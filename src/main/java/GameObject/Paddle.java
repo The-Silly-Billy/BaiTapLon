@@ -10,31 +10,35 @@ public class Paddle extends GameObject {
     GamePanel gp;
     KeyHandler keyH;
 
-    Vector2D pos;
-    int speed;
-    int width, height;
-
     public Paddle(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
 
-        this.width = gp.originalTileSize * 3;
-        this.height = gp.originalTileSize;
+        width = gp.originalTileSize * 4 - 4;
+        height = gp.originalTileSize - 6;
 
         initPos();
     }
 
     public void initPos() {
-        pos = new Vector2D((gp.screenWidth - width) / 2, gp.screenHeight - 100);
+        posX = (gp.screenWidth - width) / 2;
+        posY = gp.screenHeight - 100;
+
         speed = 4;
     }
 
     public void update() {
         if(keyH.rightPressed) {
-            pos.x += speed;
+            posX += speed;
         }
         if(keyH.leftPressed) {
-            pos.x -= speed;
+            posX -= speed;
+        }
+        if(posX < 0) {
+            posX = 0;
+        }
+        if(posX > gp.screenWidth - width) {
+            posX = gp.screenWidth - width;
         }
     }
 
@@ -42,12 +46,7 @@ public class Paddle extends GameObject {
 
         g2.setColor(Color.white);
 
-        g2.fillRect(pos.x,pos.y, width, height);
-    }
-    public void movement() {}
-    public void powerUp() {
-        //nhan suc manh = true
-        // scale = 2;
+        g2.fillRect(posX, posY, width, height);
     }
 
 }
