@@ -62,6 +62,21 @@ public class Ball extends GameObject{
         if(posY > gp.screenHeight - radius) {
             initPos();
         }
+
+        if(!isPlay) {
+            if(keyH.rightPressed) {
+                posX += 4;
+            }
+            if(keyH.leftPressed) {
+                posX -= 4;
+            }
+            if(posX < (gp.originalTileSize * 4 - 4) / 2) {
+                posX = (gp.originalTileSize * 4 - 4) / 2;
+            }
+            if(posX > gp.screenWidth - (gp.originalTileSize * 4 - 4) / 2) {
+                posX = gp.screenWidth - (gp.originalTileSize * 4 - 4) / 2;
+            }
+        }
     }
 
     public void render(Graphics2D g2) {

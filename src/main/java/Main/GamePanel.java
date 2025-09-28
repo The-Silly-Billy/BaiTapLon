@@ -83,10 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         int vaCham1 = GameObject.isCollide(ball, paddle);
 
-        if(vaCham1 == 1 || vaCham1 == 3) {
-            ball.speedX = -ball.speedX;
-        }
-        if(vaCham1 == 2 || vaCham1 == 4) {
+        if(vaCham1 == 2) {
             ball.speedY = -ball.speedY;
         }
 
