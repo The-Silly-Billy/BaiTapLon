@@ -3,13 +3,17 @@ package GameObject;
 import Main.GamePanel;
 import Main.KeyHandler;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
 public class Ball extends GameObject{
 
     GamePanel gp;
     KeyHandler keyH;
+    BufferedImage image;
 
     Random rand = new Random();
 
@@ -28,15 +32,22 @@ public class Ball extends GameObject{
 
         radius = width / 2;
 
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/Ball.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         initPos();
     }
 
     public void initPos() {
         posX = (double) gp.screenWidth / 2;
-        posY = (double) gp.screenHeight - 110;
+        posY = (double) gp.screenHeight - 66 - 8;
 
         speed = 4;
-        angle = rand.nextInt(61) + 60;
+          angle = rand.nextInt(61) + 60;
+//        angle = 90;
 
         move = new Vector2D();
 
@@ -85,9 +96,7 @@ public class Ball extends GameObject{
     }
 
     public void render(Graphics2D g2) {
-        g2.setColor(Color.yellow);
-
-        g2.fillOval((int) (posX - radius), (int) (posY - radius), width, height);
+        g2.drawImage(image, (int) posX - radius, (int) posY - radius, width, height, null);
     }
 
 }

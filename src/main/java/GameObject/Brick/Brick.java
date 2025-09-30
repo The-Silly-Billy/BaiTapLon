@@ -4,17 +4,19 @@ import GameObject.GameObject;
 import Main.GamePanel;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class BrickManager extends GameObject {
+public class Brick extends GameObject {
 
     GamePanel gp;
     int hitPoints, type;
+    public BufferedImage image;
 
-    public BrickManager(GamePanel gp) {
+    public Brick(GamePanel gp) {
         this.gp = gp;
 
-        width = gp.originalTileSize * 3;
-        height = gp.originalTileSize * 2;
+        width = gp.originalTileSize * 3;                //48
+        height = gp.originalTileSize * 2 - 7;           //25
     }
 
     public void takeHit() {
@@ -26,11 +28,5 @@ public class BrickManager extends GameObject {
             return false;
         }
         return true;
-    }
-
-    public void render(Graphics2D g2) {
-        g2.setColor(Color.red);
-
-        g2.fillRect((int) posX, (int) posY, width, height);
     }
 }

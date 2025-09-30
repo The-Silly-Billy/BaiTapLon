@@ -1,12 +1,14 @@
 package Main;
 
-import GameObject.Brick.BrLv1;
+import GameObject.Brick.Brick;
+import GameObject.Brick.Map1;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -28,12 +30,14 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
+    Random rand = new Random();
+
     //Player
     Paddle paddle = new Paddle(this, keyH);
     //Ball
     Ball ball = new Ball(this, keyH);
-    //Brick
-    BrLv1 brLv1 = new BrLv1(this);
+    //Brick Map
+    Map1 map1 = new Map1(this);
 
     public GamePanel() {
 
@@ -87,35 +91,44 @@ public class GamePanel extends JPanel implements Runnable{
             ball.move.changeY();
             if(ball.move.x >= 0) {
                 if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width / 4)) {
-                    ball.move.changeVal(ball.speed, 60);
+                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 60);
                     ball.move.changeX();
 
                 }
                 if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
-                    ball.move.changeVal(ball.speed, 30);
+                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 10);
                 }
             }
-            if(ball.move.x <= 0) {
+            if(ball.move.x < 0) {
                 if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width / 4)) {
-                    ball.move.changeVal(ball.speed, 30);
+                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 10);
                     ball.move.changeX();
                 }
                 if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
-                    ball.move.changeVal(ball.speed, 60);
+                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 60);
                 }
             }
         }
 
         //Va cham vs gach
-        int vaChamGach = GameObject.isCollide(ball, brLv1);
+        for(int i = 0; i < map1.list.size(); i++) {
+            Brick brick = map1.list.get(i);
 
-        if(vaChamGach == 1 || vaChamGach == 3) {
-            ball.move.changeX();
-            brLv1.takeHit();
-        }
-        if(vaChamGach == 2 || vaChamGach == 4) {
-            ball.move.changeY();
-            brLv1.takeHit();
+            int vaChamGach = GameObject.isCollide(ball, brick);
+
+            if (vaChamGach == 1 || vaChamGach == 3) {
+                ball.move.changeX();
+                brick.takeHit();
+            }
+            if (vaChamGach == 2 || vaChamGach == 4) {
+                ball.move.changeY();
+                brick.takeHit();
+            }
+
+            if (brick.isDestroy()) {
+                map1.list.remove(i);
+                i--;
+            }
         }
 
         //Reset lai vi tri cu sau khi chet
@@ -134,9 +147,7 @@ public class GamePanel extends JPanel implements Runnable{
         paddle.render(g2);
         ball.render(g2);
 
-        if(!brLv1.isDestroy()) {
-            brLv1.render(g2);
-        }
+        map1.render(g2);
 
         g2.dispose();
     }

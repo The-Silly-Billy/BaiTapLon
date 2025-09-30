@@ -2,15 +2,24 @@ package GameObject.Brick;
 
 import Main.GamePanel;
 
-public class BrLv1 extends BrickManager {
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
-    public BrLv1(GamePanel gp) {
+public class BrLv1 extends Brick {
+
+    public BrLv1(GamePanel gp, double posX, double posY) {
         super(gp);
 
         type = 1;
         hitPoints = 1;
 
-        posX = (double) (gp.screenWidth - width) / 2;
-        posY = (double) gp.screenHeight / 3;
+        this.posX = posX;
+        this.posY = posY;
+
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/Brick/BrLv1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,26 +3,36 @@ package GameObject;
 import Main.GamePanel;
 import Main.KeyHandler;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Paddle extends GameObject {
 
     GamePanel gp;
     KeyHandler keyH;
+    BufferedImage image;
 
     public Paddle(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
 
-        width = gp.originalTileSize * 4 - 4;
-        height = gp.originalTileSize - 6;
+        width = gp.originalTileSize * 5 - 10;               //70
+        height = gp.originalTileSize;                       //16
+
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/Paddle.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         initPos();
     }
 
     public void initPos() {
         posX = (double) (gp.screenWidth - width) / 2;
-        posY = (double) gp.screenHeight - 100;
+        posY = (double) gp.screenHeight - 66;
 
         speed = 4;
     }
@@ -44,9 +54,7 @@ public class Paddle extends GameObject {
 
     public void render(Graphics2D g2) {
 
-        g2.setColor(Color.white);
-
-        g2.fillRect((int) posX, (int) posY, width, height);
+        g2.drawImage(image, (int) posX, (int) posY, width, height, null);
     }
 
 }

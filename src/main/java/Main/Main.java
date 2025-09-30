@@ -26,22 +26,3 @@ public class Main {
 
     }
 }
-
-/*
-----MOT SO THU CAN HOAN THANH----
----------------------------------
-
-2. Brick
-    - Them tinh nang bi vo cua gach
-    - Them cac loai gach khac
-    - Khoi tao nhieu Gach luc bat dau (Map.class)
-
-3. Mau
-    - Them thong so dem mau, dem diem
-
-4. Them cac man hinh khac (MENU, SETTING, ...)
-
-5. Them PowerUp
-
----------------------------------
- */
