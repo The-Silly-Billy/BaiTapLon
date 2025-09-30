@@ -46,8 +46,8 @@ public class Ball extends GameObject{
         posY = (double) gp.screenHeight - 66 - 8;
 
         speed = 4;
-          angle = rand.nextInt(61) + 60;
-//        angle = 90;
+//          angle = rand.nextInt(61) + 60;
+        angle = 90;
 
         move = new Vector2D();
 

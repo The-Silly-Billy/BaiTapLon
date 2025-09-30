@@ -25,8 +25,7 @@ public class Map1 {
     }
 
     public void render(Graphics2D g2) {
-        for(int i = 0; i < list.size(); i++) {
-            Brick brick = list.get(i);
+        for (Brick brick : list) {
             g2.drawImage(brick.image, (int) brick.posX, (int) brick.posY, brick.width, brick.height, null);
         }
     }

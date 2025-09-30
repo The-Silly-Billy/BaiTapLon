@@ -116,14 +116,19 @@ public class GamePanel extends JPanel implements Runnable{
 
             int vaChamGach = GameObject.isCollide(ball, brick);
 
-            if (vaChamGach == 1 || vaChamGach == 3) {
-                ball.move.changeX();
-                brick.takeHit();
+            if(vaChamGach != 0) {
+                if (vaChamGach == 1 || vaChamGach == 3) {
+                    ball.move.changeX();
+                    brick.takeHit();
+                }
+                if (vaChamGach == 2 || vaChamGach == 4) {
+                    ball.move.changeY();
+                    brick.takeHit();
+                }
+
+                break;
             }
-            if (vaChamGach == 2 || vaChamGach == 4) {
-                ball.move.changeY();
-                brick.takeHit();
-            }
+
 
             if (brick.isDestroy()) {
                 map1.list.remove(i);
