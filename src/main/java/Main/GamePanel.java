@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick Map
-    Map1 map = new Map1(this);
+    Map2 map = new Map2(this);
 
     public GamePanel() {
 

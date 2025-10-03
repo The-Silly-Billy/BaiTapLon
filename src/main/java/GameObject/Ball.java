@@ -62,17 +62,17 @@ public class Ball extends GameObject{
         posX += move.x;
         posY += move.y;
 
-        if(posY - radius < 0) {
+        if((int) (posY - radius) < 0) {
             posY = radius;
             move.changeY();
         }
 
-        if(posX < radius) {
+        if((int) (posX - radius) < 0) {
             posX = radius;
             move.changeX();
         }
 
-        if(posX > gp.screenWidth - radius) {
+        if((int) posX > gp.screenWidth - radius) {
             posX = gp.screenWidth - radius;
             move.changeX();
         }
