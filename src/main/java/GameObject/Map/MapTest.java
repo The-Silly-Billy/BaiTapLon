@@ -31,7 +31,9 @@ public class MapTest {
         list.add(new BrRed(gp, 240 + 146, 300));
         list.add(new BrWhite(gp, 288 + 146, 300));
         list.add(new BrYellow(gp, 336 + 146, 300));
-        list.add(new Wall(gp, 384 + 146, 300));
+        list.add(new BrBrown(gp, 384 + 146, 300));
+        list.add(new Wall(gp, 432 + 146, 300));
+
 
     }
 
