@@ -1,7 +1,7 @@
 package Main;
 
-import GameObject.Brick.Brick;
-import GameObject.Map.MapTest;
+import GameObject.Brick.*;
+import GameObject.Map.*;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick Map
-    MapTest mapTest = new MapTest(this);
+    Map1 map = new Map1(this);
 
     public GamePanel() {
 
@@ -154,8 +154,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //Va cham vs gach
-        for(int i = 0; i < mapTest.list.size(); i++) {
-            Brick brick = mapTest.list.get(i);
+        for(int i = 0; i < map.list.size(); i++) {
+            Brick brick = map.list.get(i);
 
             int vaChamGach = GameObject.isCollide(ball, brick);
 
@@ -179,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
             if (brick.isDestroy()) {
-                mapTest.list.remove(i);
+                map.list.remove(i);
                 i--;
             }
         }
@@ -201,7 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
         paddle.render(g2);
         ball.render(g2);
 
-        mapTest.render(g2);
+        map.render(g2);
 
         g2.dispose();
     }
