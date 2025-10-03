@@ -11,6 +11,7 @@ public class Brick extends GameObject {
     GamePanel gp;
     int hitPoints;
     public BufferedImage image;
+    boolean isWall = false;
 
     public Brick(GamePanel gp) {
         this.gp = gp;
@@ -24,9 +25,9 @@ public class Brick extends GameObject {
     }
 
     public boolean isDestroy() {
-        if(hitPoints > 0) {
-            return false;
+        if(!isWall && hitPoints <= 0) {
+            return true;
         }
-        return true;
+        return false;
     }
 }

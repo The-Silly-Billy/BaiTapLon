@@ -11,10 +11,6 @@ public class Vector2D {
         angle = 90;
     }
 
-    public int getAngle() {
-        return angle;
-    }
-
     public void changeVal(int speed) {
         x = speed * Math.cos(Math.toRadians(angle));
         y = - speed * Math.sin(Math.toRadians(angle));

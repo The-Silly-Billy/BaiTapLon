@@ -5,9 +5,9 @@ import Main.GamePanel;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class BrLv1 extends Brick {
+public class BrBlue extends Brick {
 
-    public BrLv1(GamePanel gp, double posX, double posY) {
+    public BrBlue(GamePanel gp, double posX, double posY) {
         super(gp);
 
         hitPoints = 1;
@@ -16,7 +16,7 @@ public class BrLv1 extends Brick {
         this.posY = posY;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/Brick/BrLv1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/Brick/BrBlue.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
