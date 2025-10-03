@@ -85,29 +85,78 @@ public class GamePanel extends JPanel implements Runnable{
         ball.update();
 
         //Va cham voi pad
-        int vaCham1 = GameObject.isCollide(ball, paddle);
+        int vaChamVan = GameObject.isCollide(ball, paddle);
 
-        if(vaCham1 == 2) {
+        if(vaChamVan == 2) {
             ball.move.changeY();
             if(ball.move.x >= 0) {
-                if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width / 4)) {
-                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 60);
-                    ball.move.changeX();
+                if(keyH.rightPressed) {
+                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(90 - tempAngle + 1) + tempAngle;
+                        ball.move.changeVal(ball.speed);
+                    }
+                    if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(tempAngle - 10 + 1) + 10;
+                        ball.move.changeVal(ball.speed);
+                    }
+                }
 
-                }
-                if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
-                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 10);
+                if(keyH.leftPressed) {
+                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(tempAngle - 10 + 1) + 10;
+                        ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    } else if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(90 - tempAngle + 1) + tempAngle;
+                        ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    } else {
+                        ball.move.changeX();
+                    }
                 }
             }
-            if(ball.move.x < 0) {
-                if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width / 4)) {
-                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 10);
-                    ball.move.changeX();
+
+            if(ball.move.x <= 0) {
+                if(keyH.leftPressed) {
+                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(tempAngle - 10 + 1) + 10;
+                        ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    }
+                    if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(90 - tempAngle + 1) + tempAngle;
+                        ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    }
                 }
-                if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
-                    ball.move.changeVal(ball.speed, rand.nextInt(21) + 60);
+
+                if(keyH.rightPressed) {
+                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(90 - tempAngle + 1) + tempAngle;
+                    } else if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                        int tempAngle = ball.move.getAngle();
+                        ball.move.angle = rand.nextInt(tempAngle - 10 + 1) + 10;
+                    } else {
+                        ball.move.changeX();
+                    }
                 }
             }
+        }
+
+        if(vaChamVan == 1|| vaChamVan == 3) {
+            ball.move.changeX();
+        }
+
+        if(vaChamVan == 5 && ball.posY <= paddle.posY) {
+            ball.move.changeX();
+            ball.move.changeY();
         }
 
         //Va cham vs gach
@@ -125,6 +174,11 @@ public class GamePanel extends JPanel implements Runnable{
                     ball.move.changeY();
                     brick.takeHit();
                 }
+                if(vaChamGach == 5) {
+                    ball.move.changeX();
+                    ball.move.changeY();
+                    brick.takeHit();
+                }
 
                 break;
             }
@@ -137,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //Reset lai vi tri cu sau khi chet
+        //Update tut mau
         if(ball.posY > screenHeight - ball.radius) {
             ball.initPos();
             paddle.initPos();

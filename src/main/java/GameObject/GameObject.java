@@ -29,13 +29,20 @@ public class GameObject {
         double distance = (distX * distX) + (distY * distY);
 
         if(distance <= r * r) {
+            //va cham vao goc
+            if(distX != 0 && distY != 0) {
+                return 5;
+            }
+
             if(distY == 0) {
                 if(closeX - rec.posX == 0) {
                     return 1;
                 } else {
                     return 3;
                 }
-            } else {
+            }
+
+            if(distX == 0){
                 if(closeY - rec.posY == 0) {
                     return 2;
                 } else {
@@ -43,7 +50,6 @@ public class GameObject {
                 }
             }
         }
-
         return 0;
     }
 }

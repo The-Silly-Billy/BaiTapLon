@@ -20,7 +20,6 @@ public class Ball extends GameObject{
     public int radius;
     public boolean isPlay;
     public int speed;
-    int angle;
     public Vector2D move;
 
     public Ball(GamePanel gp, KeyHandler keyH) {
@@ -46,17 +45,17 @@ public class Ball extends GameObject{
         posY = (double) gp.screenHeight - 66 - 8;
 
         speed = 4;
-//          angle = rand.nextInt(61) + 60;
-        angle = 90;
 
         move = new Vector2D();
+
+        move.angle = rand.nextInt(90 - 60 + 1) + 60;
 
         isPlay = false;
     }
 
     public void update() {
         if(!isPlay && keyH.spacePressed) {
-            move.changeVal(speed, angle);
+            move.changeVal(speed);
             isPlay = true;
         }
 
@@ -86,11 +85,11 @@ public class Ball extends GameObject{
             if(keyH.leftPressed) {
                 posX -= 4;
             }
-            if(posX < (double) (gp.originalTileSize * 4 - 4) / 2) {
-                posX = (double) (gp.originalTileSize * 4 - 4) / 2;
+            if(posX < (double) (gp.originalTileSize * 5 - 10) / 2) {
+                posX = (double) (gp.originalTileSize * 5 - 10) / 2;
             }
-            if(posX > gp.screenWidth - (double) (gp.originalTileSize * 4 - 4) / 2) {
-                posX = gp.screenWidth - (double) (gp.originalTileSize * 4 - 4) / 2;
+            if(posX > gp.screenWidth - (double) (gp.originalTileSize * 5 - 10) / 2) {
+                posX = gp.screenWidth - (double) (gp.originalTileSize * 5 - 10) / 2;
             }
         }
     }

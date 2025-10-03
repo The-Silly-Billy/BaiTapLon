@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class Brick extends GameObject {
 
     GamePanel gp;
-    int hitPoints, type;
+    int hitPoints;
     public BufferedImage image;
 
     public Brick(GamePanel gp) {

@@ -15,8 +15,6 @@ public class Map1 {
     public Map1(GamePanel gp) {
         this.gp = gp;
 
-        //testing location
-//        list.add(new BrLv1(gp, 48, 50));
         for (int i = 50; i <= 175; i += 25) {
             for (int j = 48; j <= 672; j += 48) {
                 list.add(new BrLv1(gp, j, i));
