@@ -17,7 +17,7 @@ public class Map2 {
         this.gp = gp;
 
         for(int i = 0; i < 10; i++) {
-            list.add(new BrYellow(gp, 0, 50 + 25 * i));
+            list.add(new BrGray(gp, 0, 50 + 25 * i));
         }
         for(int i = 0; i < 9; i++) {
             list.add(new BrBlue(gp, 48, 75 + 25 * i));
@@ -32,7 +32,7 @@ public class Map2 {
             list.add(new BrRed(gp, 192, 150 + 25 * i));
         }
         for(int i = 0; i < 5; i++) {
-            list.add(new BrYellow(gp, 240, 175 + 25 * i));
+            list.add(new BrGray(gp, 240, 175 + 25 * i));
         }
         for(int i = 0; i < 4; i++) {
             list.add(new BrBlue(gp, 288, 200 + 25 * i));
@@ -50,7 +50,7 @@ public class Map2 {
             list.add(new BrBrown(gp, i * 48, 300));
         }
 
-        list.add(new BrYellow(gp, 480, 300));
+        list.add(new BrGray(gp, 480, 300));
 
     }
 

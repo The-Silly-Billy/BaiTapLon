@@ -5,12 +5,13 @@ import Main.GamePanel;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class BrYellow extends Brick {
+public class BrWall extends Brick {
 
-    public BrYellow(GamePanel gp, double posX, double posY) {
+    public BrWall(GamePanel gp, double posX, double posY) {
         super(gp);
 
-        hitPoints = 1;
+        hitPoints = 0;
+        isWall = true;
 
         this.posX = posX;
         this.posY = posY;

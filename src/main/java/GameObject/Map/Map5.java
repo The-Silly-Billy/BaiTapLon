@@ -16,43 +16,96 @@ public class Map5 {
     public Map5(GamePanel gp) {
         this.gp = gp;
 
-        for(int i = 0; i < 12; i++) {
-            list.add(new BrBrown(gp, 96, 50 + i * 25));
-            list.add(new BrBrown(gp, 288, 50 + i * 25));
+        for(int i = 0; i < 3; i++) {
+            list.add(new BrLightBlue(gp, 288 + i * 48, 100));
+            if(i == 2) {
+                list.add(new BrPink(gp, 288 + i * 48, 125));
+            } else {
+                list.add(new BrLightBlue(gp, 288 + i * 48, 125));
+            }
         }
 
-        for(int i = 0; i < 2; i++) {
-            for(int j = 0; j < 3; j++) {
-                list.add(new BrWhite(gp, 144 + j * 48, 75 + i * 25));
+        for(int i = 0; i < 5; i++) {
+            if(i < 2) {
+                list.add(new BrLightBlue(gp,240 + i * 48, 150));
+            } else {
+                list.add(new BrPink(gp,240 + i * 48, 150));
+            }
+
+            if(i == 3) {
+                list.add(new BrPink(gp, 240 + i * 48, 175));
+            } else if(i == 4) {
+                list.add(new BrBlue(gp,240 + i * 48, 175));
+            } else {
+                list.add(new BrLightBlue(gp,240 + i * 48, 175));
+            }
+
+            if(i == 4) {
+                list.add(new BrBlue(gp,240 + i * 48, 200));
+            } else {
+                list.add(new BrLightBlue(gp,240 + i * 48, 200));
             }
         }
 
         for(int i = 0; i < 6; i++) {
-            for(int j = 0; j < 3; j++) {
-                list.add(new BrYellow(gp, 144 + j * 48, 125 + i * 25));
+            if(i == 0) {
+                list.add(new BrWall(gp,192 + i * 48, 225));
+                list.add(new BrBrown(gp,192 + i * 48, 250));
+            } else if(i == 5) {
+                list.add(new BrBlue(gp,192 + i * 48, 225));
+                list.add(new BrBlue(gp,192 + i * 48, 250));
+            } else {
+                list.add(new BrLightBlue(gp,192 + i * 48, 225));
+            }
+
+            if(i == 1 || i == 4) {
+                list.add(new BrBlue(gp,192 + i * 48, 250));
+            }
+
+            if(i == 2 || i == 3) {
+                list.add(new BrLightBlue(gp,192 + i * 48, 250));
             }
         }
 
-        for(int i = 0; i < 2; i++) {
-            for(int j = 0; j < 3; j++) {
-                list.add(new BrPink(gp, 144 + j * 48, 275 + i * 25));
+        for(int i = 0; i < 5; i++) {
+            if(i < 2) {
+                list.add(new BrBrown(gp, 192 + i * 48, 275));
+            } else {
+                list.add(new BrBlue(gp, 192 + i * 48, 275));
             }
+        }
+
+        for(int i = 0; i < 6; i++) {
+            if(i == 0 || i == 2) {
+                list.add(new BrWall(gp, 144 + i * 48, 300));
+            } else if(i == 1) {
+                list.add(new BrBrown(gp, 144 + i * 48, 300));
+            } else {
+                list.add(new BrBlue(gp, 144 + i * 48, 300));
+            }
+        }
+
+        for(int i = 0; i < 4; i++) {
+            list.add(new BrBrown(gp, 144 + i * 48, 325));
+
+            if(i == 0 || i == 2) {
+                list.add(new BrWall(gp, 96 + i * 48, 350));
+            } else {
+                list.add(new BrBrown(gp, 96 + i * 48, 350));
+            }
+
+            list.add(new BrBrown(gp, 96 + i * 48, 375));
         }
 
         for(int i = 0; i < 3; i++) {
-            if(i == 1) {
-                list.add(new BrBrown(gp, 144 + i + 48, 325));
-            } else {
-                list.add(new Wall(gp, 144 + i * 48, 325));
-            }
+            list.add(new BrBrown(gp, 96 + i * 48, 400));
+            list.add(new BrBrown(gp, 48 + i * 48, 425));
         }
 
-        list.add(new BrBrown(gp, 336, 100));
-        list.add(new BrBrown(gp, 336, 225));
-
-        for(int i = 0; i < 4; i++) {
-            list.add(new BrBrown(gp, 384, 125 + i * 25));
+        for(int i = 0; i < 2; i++) {
+            list.add(new BrBrown(gp, 48 + i * 48, 450));
         }
+
     }
 
     public void render(Graphics2D g2) {

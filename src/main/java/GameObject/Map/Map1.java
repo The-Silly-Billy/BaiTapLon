@@ -26,7 +26,7 @@ public class Map1 {
             list.add(new BrBlue(gp, i, 150));
         }
         for(int i = 0; i <= 720; i += 48) {
-            list.add(new BrYellow(gp, i, 175));
+            list.add(new BrGray(gp, i, 175));
         }
         for(int i = 0; i <= 720; i += 48) {
             list.add(new BrPink(gp, i, 200));

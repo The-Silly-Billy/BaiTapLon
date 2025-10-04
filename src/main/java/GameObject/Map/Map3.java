@@ -24,7 +24,7 @@ public class Map3 {
             if(i < 3) {
                 list.add(new BrWhite(gp, i * 48, 125));
             } else {
-                list.add(new Wall(gp, i * 48, 125));
+                list.add(new BrWall(gp, i * 48, 125));
             }
         }
 
@@ -36,7 +36,7 @@ public class Map3 {
             if(i > 7) {
                 list.add(new BrWhite(gp, i * 48, 225));
             } else {
-                list.add(new Wall(gp, i * 48, 225));
+                list.add(new BrWall(gp, i * 48, 225));
             }
         }
 
@@ -48,7 +48,7 @@ public class Map3 {
             if(i < 3) {
                 list.add(new BrBlue(gp, i * 48, 325));
             } else {
-                list.add(new Wall(gp, i * 48, 325));
+                list.add(new BrWall(gp, i * 48, 325));
             }
         }
 
@@ -60,7 +60,7 @@ public class Map3 {
             if(i > 7) {
                 list.add(new BrBlue(gp, i * 48, 425));
             } else {
-                list.add(new Wall(gp, i * 48, 425));
+                list.add(new BrWall(gp, i * 48, 425));
             }
         }
 
