@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while(gameThread != null) {
+        while (gameThread != null) {
 
             //Setup FPS dua tren "DELTA METHOD"
             currentTime = System.nanoTime();
