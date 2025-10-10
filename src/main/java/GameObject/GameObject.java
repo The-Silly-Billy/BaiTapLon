@@ -10,7 +10,7 @@ public class GameObject {
         double closeY = cir.posY;
         int r = cir.width / 2;
 
-        //commit cua hieu
+        //tim canh gan nhat cua hinh hcn voi hinh tron
         if(cir.posX > rec.posX + rec.width) {
             closeX = rec.posX + rec.width;          //ben phai (3)
         } else if (cir.posX < rec.posX) {
