@@ -1,6 +1,6 @@
 package GameObject.Brick;
 
-import GameObject.GameObject;
+import GameObject.*;
 import Main.GamePanel;
 
 import java.awt.*;
@@ -20,8 +20,8 @@ public class Brick extends GameObject {
         height = gp.originalTileSize * 2 - 7;           //25
     }
 
-    public void takeHit() {
-        hitPoints --;
+    public void takeHit(Ball ball) {
+        hitPoints -= ball.ballDamage;
     }
 
     public boolean isDestroy() {

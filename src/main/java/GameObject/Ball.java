@@ -21,6 +21,7 @@ public class Ball extends GameObject{
     public boolean isPlay;
     public int speed;
     public Vector2D move;
+    public int ballDamage;
 
     public Ball(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -30,6 +31,8 @@ public class Ball extends GameObject{
         height = gp.originalTileSize;
 
         radius = width / 2;
+
+        ballDamage = 1;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Ball.png"));
@@ -44,11 +47,11 @@ public class Ball extends GameObject{
         posX = (double) gp.screenWidth / 2;
         posY = (double) gp.screenHeight - 66 - 8;
 
-        speed = 4;
+        speed = 8;
 
         move = new Vector2D();
 
-        move.angle = rand.nextInt(90 - 60 + 1) + 60;
+//        move.angle = rand.nextInt(90 - 60 + 1) + 60;
 
         isPlay = false;
     }

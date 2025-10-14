@@ -3,9 +3,9 @@ package GameObject;
 public class GameObject {
     public double posX,posY;
     public int width, height;
-    int speed;
+    public int speed;
 
-    public static int isCollide(GameObject cir, GameObject rec) {
+    public static int isCollideBnR(GameObject cir, GameObject rec) {
         double closeX = cir.posX;
         double closeY = cir.posY;
         int r = cir.width / 2;
@@ -51,5 +51,12 @@ public class GameObject {
             }
         }
         return 0;
+    }
+
+    public static boolean isCollideRnR(GameObject rec1, GameObject rec2) {
+        return  rec1.posX + rec1.width >= rec2.posX &&
+                rec2.posX + rec2.width >= rec1.posX &&
+                rec1.posY + rec1.height >= rec2.posY &&
+                rec2.posY + rec2.height >= rec1.posY;
     }
 }

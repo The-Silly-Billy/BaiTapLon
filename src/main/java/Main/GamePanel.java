@@ -5,6 +5,7 @@ import GameObject.Map.*;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
+import GameObject.PowerUp.PowerUp;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -37,7 +38,8 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick Map
-    Map1 map = new Map1(this);
+    MapTest map = new MapTest(this);
+    //PowerUp
 
     public GamePanel() {
 
@@ -85,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
         ball.update();
 
         //Va cham voi pad
-        int vaChamVan = GameObject.isCollide(ball, paddle);
+        int vaChamVan = GameObject.isCollideBnR(ball, paddle);
 
         if(vaChamVan == 2) {
             ball.move.changeY();
@@ -157,32 +159,34 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i < map.list.size(); i++) {
             Brick brick = map.list.get(i);
 
-            int vaChamGach = GameObject.isCollide(ball, brick);
+            int vaChamGach = GameObject.isCollideBnR(ball, brick);
 
             if(vaChamGach != 0) {
                 if (vaChamGach == 1 || vaChamGach == 3) {
                     ball.move.changeX();
-                    brick.takeHit();
+                    brick.takeHit(ball);
                 }
                 if (vaChamGach == 2 || vaChamGach == 4) {
                     ball.move.changeY();
-                    brick.takeHit();
+                    brick.takeHit(ball);
                 }
                 if(vaChamGach == 5) {
                     ball.move.changeX();
                     ball.move.changeY();
-                    brick.takeHit();
+                    brick.takeHit(ball);
                 }
 
                 break;
             }
-
 
             if (brick.isDestroy()) {
                 map.list.remove(i);
                 i--;
             }
         }
+
+        //Va cham voi PowerUp
+
 
         //Reset lai vi tri cu sau khi chet
         //Update tut mau
