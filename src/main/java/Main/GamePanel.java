@@ -7,6 +7,8 @@ import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.heart;
 import GameObject.PowerUp.PowerUp;
+import GameUI.StartMenu;
+import GameUI.GameState;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -30,10 +32,12 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;        //768 pixels
     public final int screenHeight = tileSize * maxScreenRow;       //576 pixels
 
+    StartMenu menu = new StartMenu(this);
+    GameState state = GameState.MENU;
     //FPS
     int FPS = 60;
 
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
 
     Random rand = new Random();
@@ -97,8 +101,18 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        paddle.update();
-        ball.update();
+        switch (state) {
+            case MENU:
+                menu.update();
+                break;
+            case PLAYING:
+                paddle.update();
+                ball.update();
+                break;
+            case GAME_OVER:
+                // handle game over later
+                break;
+        }
 
         //Va cham voi pad
         int vaChamVan = GameObject.isCollideBnR(ball, paddle);
@@ -242,17 +256,37 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D)g;
 
-        paddle.render(g2);
-        ball.render(g2);
+        switch (state) {
+            case MENU:
+                menu.draw(g2);
+                break;
+            case PLAYING:
+                paddle.render(g2);
+                ball.render(g2);
 
-        map.render(g2);
-        for (heart h : heartList) {
-            h.render(g2);
+                map.render(g2);
+                for (heart h : heartList) {
+                    h.render(g2);
+                }
+                g2.setColor(Color.white);
+                g2.setFont(new Font("Time New Roman",Font.BOLD,10 ));
+                g2.drawString("Score :"+scoreplayer,screenWidth-70,screenHeight -40);
+                break;
+            case GAME_OVER:
+                //Game over
         }
-        g2.setColor(Color.white);
-        g2.setFont(new Font("Time New Roman",Font.BOLD,10 ));
-        g2.drawString("Score :"+scoreplayer,screenWidth-70,screenHeight -40);
-
         g2.dispose();
+    }
+
+    public GameState getState() {
+        return this.state;
+    }
+
+    public StartMenu getMenu() {
+        return menu;
+    }
+
+    public void setState( GameState state) {
+        this.state = state;
     }
 }
