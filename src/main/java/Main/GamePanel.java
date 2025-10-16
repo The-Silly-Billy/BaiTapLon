@@ -43,10 +43,11 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick Map
-    Map6 map = new Map6(this);
+    Map1 map = new Map1(this);
     //PowerUp
     //hearts
     List<heart> heartList=new ArrayList<>();
+    int scoreplayer=0;
 
     public GamePanel() {
 
@@ -103,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
         int vaChamVan = GameObject.isCollideBnR(ball, paddle);
 
         if(vaChamVan == 2) {
+
             ball.move.changeY();
             if(ball.move.x >= 0) {
                 if(keyH.rightPressed) {
@@ -174,16 +176,26 @@ public class GamePanel extends JPanel implements Runnable{
 
             int vaChamGach = GameObject.isCollideBnR(ball, brick);
 
-            if(vaChamGach != 0) {
+            if(vaChamGach != 0 ) {
+
                 if (vaChamGach == 1 || vaChamGach == 3) {
+                    if (!(brick instanceof BrWall)){
+                    scoreplayer++;
+                    repaint();}
                     ball.move.changeX();
                     brick.takeHit(ball);
                 }
-                if (vaChamGach == 2 || vaChamGach == 4) {
+                if (vaChamGach == 2 || vaChamGach == 4)  {
+                    if (!(brick instanceof BrWall)){
+                        scoreplayer++;
+                        repaint();}
                     ball.move.changeY();
                     brick.takeHit(ball);
                 }
                 if(vaChamGach == 5) {
+                    if (!(brick instanceof BrWall)){
+                        scoreplayer++;
+                        repaint();}
                     ball.move.changeX();
                     ball.move.changeY();
                     brick.takeHit(ball);
@@ -237,6 +249,9 @@ public class GamePanel extends JPanel implements Runnable{
         for (heart h : heartList) {
             h.render(g2);
         }
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Time New Roman",Font.BOLD,10 ));
+        g2.drawString("Score :"+scoreplayer,screenWidth-70,screenHeight -40);
 
         g2.dispose();
     }
