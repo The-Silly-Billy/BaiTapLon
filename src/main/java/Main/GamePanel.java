@@ -55,8 +55,14 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);       //de tim hieu them ^^
 
         this.addKeyListener(keyH);
-        this.setFocusable(true);            //de tim hieu them ^^
-
+        this.setFocusable(true);//de tim hieu them ^^
+        setupHearts();
+    }
+    //ham add 3 oject heart vao list
+    public void setupHearts(){
+        for (int i=0;i<3;i++){
+            heartList.add(new heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+        }
     }
 
     public void startGameThread() {
