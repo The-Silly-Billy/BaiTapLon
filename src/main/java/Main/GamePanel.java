@@ -5,13 +5,18 @@ import GameObject.Map.*;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
+import GameObject.heart;
 import GameObject.PowerUp.PowerUp;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
+
 
     //Cai dat pixel
     public final int originalTileSize = 16;                         // 1 khung pixel 16x16
@@ -40,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable{
     //Brick Map
     Map6 map = new Map6(this);
     //PowerUp
+    //hearts
+    List<heart> heartList=new ArrayList<>();
 
     public GamePanel() {
 
@@ -48,8 +55,14 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);       //de tim hieu them ^^
 
         this.addKeyListener(keyH);
-        this.setFocusable(true);            //de tim hieu them ^^
-
+        this.setFocusable(true);//de tim hieu them ^^
+        setupHearts();
+    }
+    //ham add 3 oject heart vao list
+    public void setupHearts(){
+        for (int i=0;i<3;i++){
+            heartList.add(new heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+        }
     }
 
     public void startGameThread() {
@@ -188,12 +201,27 @@ public class GamePanel extends JPanel implements Runnable{
         //Va cham voi PowerUp
 
 
-        //Reset lai vi tri cu sau khi chet
+
         //Update tut mau
+        //khi het ba mang out game
         if(ball.posY > screenHeight - ball.radius) {
-            ball.initPos();
-            paddle.initPos();
+            if (!heartList.isEmpty()) {
+                heartList.remove(heartList.size() - 1);//xoa mot heart khi chet
+                if (heartList.isEmpty()) {
+                    System.exit(0);
+                } else {
+
+
+                   //reset khi chua het mang
+                    ball.initPos();
+                    paddle.initPos();
+                }
+            }
+
+
+
         }
+
     }
 
     //method ve
@@ -206,6 +234,9 @@ public class GamePanel extends JPanel implements Runnable{
         ball.render(g2);
 
         map.render(g2);
+        for (heart h : heartList) {
+            h.render(g2);
+        }
 
         g2.dispose();
     }

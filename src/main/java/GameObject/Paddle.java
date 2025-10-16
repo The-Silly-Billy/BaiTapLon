@@ -44,9 +44,11 @@ public class Paddle extends GameObject {
         if(keyH.leftPressed) {
             posX -= speed;
         }
+        // ra khoi man hinh trai thi co hieu ung dung yen
         if(posX < 0) {
             posX = 0;
         }
+        //ra khoi man hinh ben phai thi co hieu ung dung yen
         if(posX > gp.screenWidth - width) {
             posX = gp.screenWidth - width;
         }

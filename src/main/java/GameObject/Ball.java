@@ -64,17 +64,17 @@ public class Ball extends GameObject{
 
         posX += move.x;
         posY += move.y;
-
+        //neu bong ra khoi man hinh ben tren
         if((int) (posY - radius) < 0) {
             posY = radius;
             move.changeY();
         }
-
+       //neu bong ra khoi man hinh ben trai
         if((int) (posX - radius) < 0) {
             posX = radius;
             move.changeX();
         }
-
+        //neu bong ra khoi man hinh ben phai
         if((int) posX > gp.screenWidth - radius) {
             posX = gp.screenWidth - radius;
             move.changeX();
@@ -88,6 +88,7 @@ public class Ball extends GameObject{
             if(keyH.leftPressed) {
                 posX -= 4;
             }
+            //chua hieu
             if(posX < (double) (gp.originalTileSize * 5 - 10) / 2) {
                 posX = (double) (gp.originalTileSize * 5 - 10) / 2;
             }
