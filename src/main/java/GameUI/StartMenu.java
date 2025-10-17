@@ -26,9 +26,10 @@ public class StartMenu {
 
 
     private void loadButtons() {
-        buttons[0] = new Button(gamePanel.screenWidth / 2 , gamePanel.screenHeight  / 2 - 2* Button.B_HEIGHT_DEFAULT,0, GameState.PLAYING);
-        buttons[1] = new Button(gamePanel.screenWidth / 2 , gamePanel.screenHeight / 2 ,1, GameState.OPTION);
-        buttons[2] = new Button(gamePanel.screenWidth / 2 , gamePanel.screenHeight / 2 + 2* Button.B_HEIGHT_DEFAULT,2, GameState.QUIT);
+        buttons[0] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight  / 2 - 2* Button.MENU_B_HEIGHT,0,LoadMat.MENU_BUTTONS, GameState.PLAYING);
+        buttons[0].setKeyOn(true);
+        buttons[1] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight / 2 - Button.yCenterPoint,1, LoadMat.MENU_BUTTONS,GameState.OPTION);
+        buttons[2] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight / 2 + 2* Button.MENU_B_HEIGHT,2, LoadMat.MENU_BUTTONS, GameState.QUIT);
     }
 
     public GameState getState() {
