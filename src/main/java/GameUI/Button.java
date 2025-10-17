@@ -4,7 +4,13 @@ import Main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
+
 import GameUI.StartMenu;
+import GameUI.PauseGame;
+
+import static GameUI.GameState.MENU;
+import static GameUI.GameState.PAUSED;
 
 public class Button {
     private int xPos, yPos, rowIndex;
@@ -12,31 +18,72 @@ public class Button {
     private GameState state;
     private boolean keyOn, keyPressed;
     private int index;
+    private String SOURCE;
+    private int scale;
 
-    protected static final int B_WIDTH_DEFAULT = 140;
-    protected static final int B_HEIGHT_DEFAULT = 56;
-    protected static final int xCenterPoint = B_WIDTH_DEFAULT / 2;
-    protected  static final int yCenterPoint = B_HEIGHT_DEFAULT / 2;
+    protected static final int MENU_B_WIDTH = 140;
+    protected static final int MENU_B_HEIGHT = 56;
+    private static final int PAUSE_B_WIDTH = 28;
+    private static final int PAUSE_B_HEIGHT = 28;
+    protected static final int xCenterPoint = MENU_B_WIDTH / 2;
+    protected  static final int yCenterPoint = MENU_B_HEIGHT / 2;
 
-    public Button(int xPos, int yPos, int rowIndex, GameState state) {
+    public Button(int xPos, int yPos, int rowIndex,String SOURCE, GameState state) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.rowIndex = rowIndex;
         this.state = state;
         this.keyOn = false;
         this.keyPressed = false;
+        this.SOURCE = SOURCE;
+        this.scale = 1;
         loadImgs();
     }
 
     private void loadImgs() {
         imgs = new BufferedImage[3];
-        BufferedImage temp = LoadMat.GetSpriteAtlas(LoadMat.MENU_BUTTONS);
-        for (int i = 0; i < imgs.length; i++)
-            imgs[i] = temp.getSubimage(i * B_WIDTH_DEFAULT, rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
+        BufferedImage temp = LoadMat.GetSpriteAtlas(SOURCE);
+        int w, h;
+
+        // Decide button size based on which state it belongs to
+        if (state == MENU) {
+            w = MENU_B_WIDTH;
+            h = MENU_B_HEIGHT;
+        } else if (state == PAUSED) {
+            w = PAUSE_B_WIDTH;
+            h = PAUSE_B_HEIGHT;
+        } else {
+            // fallback in case new states are added later
+            w = MENU_B_WIDTH;
+            h = MENU_B_HEIGHT;
+        }
+
+        for (int i = 0; i < imgs.length; i++) {
+            imgs[i] = temp.getSubimage(
+                    i * w,
+                    rowIndex * h,
+                    w,
+                    h
+            );
+        }
     }
 
     public void draw( Graphics g) {
-        g.drawImage(imgs[index], xPos - xCenterPoint, yPos - yCenterPoint, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT, null);
+        int w, h;
+
+        // Match draw size with the state too
+        if (state == MENU) {
+            w = MENU_B_WIDTH;
+            h = MENU_B_HEIGHT;
+        } else if (state == PAUSED) {
+            w = PAUSE_B_WIDTH;
+            h = PAUSE_B_HEIGHT;
+        } else {
+            w = MENU_B_WIDTH;
+            h = MENU_B_HEIGHT;
+        }
+
+        g.drawImage(imgs[index], xPos, yPos, w *  this.scale, h * this.scale, null);
     }
 
     public void update() {
@@ -71,6 +118,10 @@ public class Button {
     public void reset() {
         keyOn = false;
         keyPressed = false;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
     }
 
 
