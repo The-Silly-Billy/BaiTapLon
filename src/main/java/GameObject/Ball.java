@@ -52,6 +52,7 @@ public class Ball extends GameObject{
         move = new Vector2D();
 
 //        move.angle = rand.nextInt(90 - 60 + 1) + 60;
+        move.angle = 45;
 
         isPlay = false;
     }

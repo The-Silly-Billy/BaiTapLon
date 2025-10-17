@@ -5,7 +5,7 @@ import GameObject.Map.*;
 import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
-import GameObject.heart;
+import GameObject.Heart;
 import GameObject.PowerUp.PowerUp;
 import GameUI.StartMenu;
 import GameUI.GameState;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
     Map1 map = new Map1(this);
     //PowerUp
     //hearts
-    List<heart> heartList=new ArrayList<>();
+    List<Heart> heartList=new ArrayList<>();
     int scoreplayer=0;
 
     public GamePanel() {
@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
     //ham add 3 oject heart vao list
     public void setupHearts(){
         for (int i=0;i<3;i++){
-            heartList.add(new heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+            heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
         }
     }
 
@@ -234,7 +234,7 @@ public class GamePanel extends JPanel implements Runnable{
             if (!heartList.isEmpty()) {
                 heartList.remove(heartList.size() - 1);//xoa mot heart khi chet
                 if (heartList.isEmpty()) {
-                    System.exit(0);
+//                    System.exit(0);
                 } else {
 
 
@@ -265,7 +265,7 @@ public class GamePanel extends JPanel implements Runnable{
                 ball.render(g2);
 
                 map.render(g2);
-                for (heart h : heartList) {
+                for (Heart h : heartList) {
                     h.render(g2);
                 }
                 g2.setColor(Color.white);
@@ -286,7 +286,7 @@ public class GamePanel extends JPanel implements Runnable{
         return menu;
     }
 
-    public void setState( GameState state) {
+    public void setState(GameState state) {
         this.state = state;
     }
 }
