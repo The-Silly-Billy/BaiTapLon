@@ -13,6 +13,7 @@ import GameUI.GameState;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
     //hearts
     List<Heart> heartList=new ArrayList<>();
     int scoreplayer=0;
+    Font customFont=null;
 
     public GamePanel() {
 
@@ -62,6 +64,16 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);//de tim hieu them ^^
         setupHearts();
+        try {
+            InputStream inputStream=getClass().getResourceAsStream("/Font/Jersey25-Regular.ttf");
+            customFont =Font.createFont(Font.TRUETYPE_FONT,inputStream);
+            GraphicsEnvironment ge=GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(customFont);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            System.out.println("loi");
+        }
     }
     //ham add 3 oject heart vao list
     public void setupHearts(){
@@ -234,7 +246,7 @@ public class GamePanel extends JPanel implements Runnable{
             if (!heartList.isEmpty()) {
                 heartList.remove(heartList.size() - 1);//xoa mot heart khi chet
                 if (heartList.isEmpty()) {
-//                    System.exit(0);
+                    System.exit(0);
                 } else {
 
 
@@ -268,9 +280,13 @@ public class GamePanel extends JPanel implements Runnable{
                 for (Heart h : heartList) {
                     h.render(g2);
                 }
+                if (customFont != null) {
+
+                    g2.setFont(customFont.deriveFont(Font.PLAIN, 20f));
+                }
                 g2.setColor(Color.white);
-                g2.setFont(new Font("Time New Roman",Font.BOLD,10 ));
-                g2.drawString("Score :"+scoreplayer,screenWidth-70,screenHeight -40);
+
+                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
                 break;
             case GAME_OVER:
                 //Game over
