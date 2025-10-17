@@ -31,6 +31,9 @@ public class KeyHandler implements KeyListener{
             if (code == KeyEvent.VK_SPACE) {
                 spacePressed = true;
             }
+            if (code == KeyEvent.VK_ESCAPE) {
+                gamePanel.setState(GameState.PAUSED);
+            }
         }
     }
 

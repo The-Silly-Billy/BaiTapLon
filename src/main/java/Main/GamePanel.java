@@ -7,6 +7,7 @@ import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.Heart;
 import GameObject.PowerUp.PowerUp;
+import GameUI.PauseGame;
 import GameUI.StartMenu;
 import GameUI.GameState;
 
@@ -34,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow;       //576 pixels
 
     StartMenu menu = new StartMenu(this);
+    PauseGame pauseGame = new PauseGame(this);
     GameState state = GameState.MENU;
     //FPS
     int FPS = 60;
@@ -123,6 +125,9 @@ public class GamePanel extends JPanel implements Runnable{
                 break;
             case GAME_OVER:
                 // handle game over later
+                break;
+            case PAUSED:
+                pauseGame.update();
                 break;
         }
 
@@ -290,6 +295,24 @@ public class GamePanel extends JPanel implements Runnable{
                 break;
             case GAME_OVER:
                 //Game over
+            case PAUSED:
+                paddle.render(g2);
+                ball.render(g2);
+
+                map.render(g2);
+                for (Heart h : heartList) {
+                    h.render(g2);
+                }
+                if (customFont != null) {
+
+                    g2.setFont(customFont.deriveFont(Font.PLAIN, 20f));
+                }
+                g2.setColor(Color.white);
+
+                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
+                pauseGame.draw(g2);
+                break;
+
         }
         g2.dispose();
     }
