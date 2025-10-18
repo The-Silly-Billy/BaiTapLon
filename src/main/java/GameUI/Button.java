@@ -28,7 +28,7 @@ public class Button {
     protected static final int xCenterPoint = MENU_B_WIDTH / 2;
     protected  static final int yCenterPoint = MENU_B_HEIGHT / 2;
 
-    public Button(int xPos, int yPos, int rowIndex,String SOURCE, GameState state) {
+    public Button(int xPos, int yPos, int rowIndex, String SOURCE, GameState state) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.rowIndex = rowIndex;

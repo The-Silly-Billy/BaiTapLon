@@ -4,32 +4,27 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import Main.GamePanel;
-import GameUI.Button;
-import Main.GamePanel;
-import Main.KeyHandler;
 
 import static GameUI.GameState.MENU;
 
 public class StartMenu {
     private Button[] buttons = new Button[3];
     private BufferedImage backgroundImg;
-    private int menyX, menuY, menuWidth, menuHeight;
-    private GamePanel gamePanel;
+    private int menuX, menuY, menuWidth, menuHeight;
+    private GamePanel gp;
     public GameState state = MENU;
     private int buttonNumber = 0;
 
     public StartMenu( GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+        this.gp = gamePanel;
         loadButtons();
     }
 
-
-
     private void loadButtons() {
-        buttons[0] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight  / 2 - 2* Button.MENU_B_HEIGHT,0,LoadMat.MENU_BUTTONS, GameState.PLAYING);
+        buttons[0] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight  / 2 - 2* Button.MENU_B_HEIGHT,0,LoadMat.MENU_BUTTONS, GameState.PLAYING);
         buttons[0].setKeyOn(true);
-        buttons[1] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight / 2 - Button.yCenterPoint,1, LoadMat.MENU_BUTTONS,GameState.OPTION);
-        buttons[2] = new Button(gamePanel.screenWidth / 2 - Button.xCenterPoint , gamePanel.screenHeight / 2 + 2* Button.MENU_B_HEIGHT,2, LoadMat.MENU_BUTTONS, GameState.QUIT);
+        buttons[1] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 - Button.yCenterPoint,1, LoadMat.MENU_BUTTONS,GameState.OPTION);
+        buttons[2] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 + 2* Button.MENU_B_HEIGHT,2, LoadMat.MENU_BUTTONS, GameState.QUIT);
     }
 
     public GameState getState() {
@@ -81,7 +76,7 @@ public class StartMenu {
             state = buttons[buttonNumber].getState();
             this.setState(state);
 
-            gamePanel.setState(state);
+            gp.setState(state);
         }
     }
 }

@@ -31,8 +31,11 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxScreenCol = 11;
     final int maxScreenRow = 15;
 
-    public final int screenWidth = tileSize * maxScreenCol;        //768 pixels
-    public final int screenHeight = tileSize * maxScreenRow;       //576 pixels
+    public final int screenWidth = tileSize * maxScreenCol;        //576 pixels
+    public final int screenHeight = tileSize * maxScreenRow;       //768 pixels
+
+    //576-40= 536 rong
+    //150-16-10 = 124 cao
 
     StartMenu menu = new StartMenu(this);
     PauseGame pauseGame = new PauseGame(this);
@@ -50,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Ball
     Ball ball = new Ball(this, keyH);
     //Brick Map
-    Map1 map = new Map1(this);
+    Map6 map = new Map6(this);
     //PowerUp
     //hearts
     List<Heart> heartList=new ArrayList<>();
@@ -125,6 +128,9 @@ public class GamePanel extends JPanel implements Runnable{
                 break;
             case GAME_OVER:
                 // handle game over later
+                break;
+            case QUIT:
+                System.exit(0);
                 break;
             case PAUSED:
                 pauseGame.update();
@@ -210,23 +216,29 @@ public class GamePanel extends JPanel implements Runnable{
             if(vaChamGach != 0 ) {
 
                 if (vaChamGach == 1 || vaChamGach == 3) {
-                    if (!(brick instanceof BrWall)){
-                    scoreplayer++;
-                    repaint();}
+                    if (!(brick instanceof BrWall)) {
+                        scoreplayer++;
+                        repaint();
+                    }
+
                     ball.move.changeX();
                     brick.takeHit(ball);
                 }
                 if (vaChamGach == 2 || vaChamGach == 4)  {
-                    if (!(brick instanceof BrWall)){
+                    if (!(brick instanceof BrWall)) {
                         scoreplayer++;
-                        repaint();}
+                        repaint();
+                    }
+
                     ball.move.changeY();
                     brick.takeHit(ball);
                 }
                 if(vaChamGach == 5) {
-                    if (!(brick instanceof BrWall)){
+                    if (!(brick instanceof BrWall)) {
                         scoreplayer++;
-                        repaint();}
+                        repaint();
+                    }
+
                     ball.move.changeX();
                     ball.move.changeY();
                     brick.takeHit(ball);
@@ -250,19 +262,11 @@ public class GamePanel extends JPanel implements Runnable{
         if(ball.posY > screenHeight - ball.radius) {
             if (!heartList.isEmpty()) {
                 heartList.remove(heartList.size() - 1);//xoa mot heart khi chet
-                if (heartList.isEmpty()) {
-                    System.exit(0);
-                } else {
-
-
-                   //reset khi chua het mang
-                    ball.initPos();
-                    paddle.initPos();
-                }
+                ball.initPos();
+                paddle.initPos();
             }
-
-
-
+            ball.initPos();
+            paddle.initPos();
         }
 
     }

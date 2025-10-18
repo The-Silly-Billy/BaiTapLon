@@ -32,7 +32,7 @@ public class Paddle extends GameObject {
 
     public void initPos() {
         posX = (double) (gp.screenWidth - width) / 2;
-        posY = (double) gp.screenHeight - 66;
+        posY = (double) gp.screenHeight - 150;
 
         speed = 4;
     }

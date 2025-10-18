@@ -45,9 +45,9 @@ public class Ball extends GameObject{
 
     public void initPos() {
         posX = (double) gp.screenWidth / 2;
-        posY = (double) gp.screenHeight - 66 - 8;
+        posY = (double) gp.screenHeight - 150 - 8;
 
-        speed = 8;
+        speed = 10;
 
         move = new Vector2D();
 

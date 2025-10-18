@@ -17,7 +17,7 @@ public class BrWall extends Brick {
         this.posY = posY;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/Brick/BrYellow.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/Brick/Wall.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

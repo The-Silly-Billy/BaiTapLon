@@ -7,5 +7,4 @@ public enum GameState {
     GAME_OVER,
     OPTION,
     QUIT
-
 }
