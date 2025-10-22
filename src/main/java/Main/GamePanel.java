@@ -332,4 +332,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void setState(GameState state) {
         this.state = state;
     }
+
+    public PauseGame getPauseGame() {
+        return this.pauseGame;
+    }
 }

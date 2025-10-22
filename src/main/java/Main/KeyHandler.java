@@ -19,7 +19,10 @@ public class KeyHandler implements KeyListener{
 
         if(gamePanel.getState() == GameState.MENU) {
             gamePanel.getMenu().keyPressed(e);
-        } else if (gamePanel.getState() == GameState.PLAYING) {
+        } else if (gamePanel.getState() == GameState.PAUSED) {
+            gamePanel.getPauseGame().keyPressed(e);
+        }
+        else if (gamePanel.getState() == GameState.PLAYING) {
             int code = e.getKeyCode();
 
             if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {

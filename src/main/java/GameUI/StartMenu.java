@@ -74,7 +74,7 @@ public class StartMenu {
 
         if (code == KeyEvent.VK_ENTER) {
             state = buttons[buttonNumber].getState();
-            this.setState(state);
+//            this.setState(state);
 
             gp.setState(state);
         }
