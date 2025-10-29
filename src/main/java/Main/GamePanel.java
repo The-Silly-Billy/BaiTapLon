@@ -6,15 +6,17 @@ import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.Heart;
+import GameObject.PowerUp.PowerUp;
 import GameUI.PauseGame;
 import GameUI.StartMenu;
 import GameUI.GameState;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -239,9 +241,11 @@ public class GamePanel extends JPanel implements Runnable{
                         repaint();
                     }
 
+                    ball.move.changeX();
                     ball.move.changeY();
                     brick.takeHit(ball);
                 }
+
                 break;
             }
 
