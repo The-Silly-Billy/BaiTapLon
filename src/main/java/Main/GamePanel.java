@@ -6,17 +6,15 @@ import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.Heart;
-import GameObject.PowerUp.PowerUp;
 import GameUI.PauseGame;
 import GameUI.StartMenu;
 import GameUI.GameState;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -56,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
     Map6 map = new Map6(this);
     //PowerUp
     //hearts
-    List<Heart> heartList=new ArrayList<>();
+    ArrayList<Heart> heartList=new ArrayList<>();
     int scoreplayer=0;
     Font customFont=null;
 
@@ -68,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         this.addKeyListener(keyH);
         this.setFocusable(true);//de tim hieu them ^^
+
         setupHearts();
         try {
             InputStream inputStream=getClass().getResourceAsStream("/Font/Jersey25-Regular.ttf");
@@ -138,29 +137,29 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //Va cham voi pad
-        int vaChamVan = GameObject.isCollideBnR(ball, paddle);
+        int vaChamVan = GameObject.typeCollideBnR(ball, paddle);
 
         if(vaChamVan == 2) {
 
             ball.move.changeY();
             if(ball.move.x >= 0) {
                 if(keyH.rightPressed) {
-                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                    if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
                     }
-                    if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                     }
                 }
 
                 if(keyH.leftPressed) {
-                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                    if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
-                    } else if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
@@ -172,12 +171,12 @@ public class GamePanel extends JPanel implements Runnable{
 
             if(ball.move.x <= 0) {
                 if(keyH.leftPressed) {
-                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                    if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
                     }
-                    if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
@@ -185,10 +184,10 @@ public class GamePanel extends JPanel implements Runnable{
                 }
 
                 if(keyH.rightPressed) {
-                    if(ball.posX >= paddle.posX && ball.posX <= paddle.posX + ((double) paddle.width) / 4) {
+                    if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
-                    } else if(ball.posX >= paddle.posX + ((double) (paddle.width * 3) / 4) && paddle.posX <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                     } else {
@@ -202,7 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
             ball.move.changeX();
         }
 
-        if(vaChamVan == 5 && ball.posY <= paddle.posY) {
+        if(vaChamVan == 5 && ball.posY + ball.radius <= paddle.posY) {
             ball.move.changeX();
             ball.move.changeY();
         }
@@ -211,9 +210,19 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i < map.list.size(); i++) {
             Brick brick = map.list.get(i);
 
-            int vaChamGach = GameObject.isCollideBnR(ball, brick);
+            int vaChamGach = GameObject.typeCollideBnR(ball, brick);
 
             if(vaChamGach != 0 ) {
+                if(vaChamGach == 5) {
+                    if (!(brick instanceof BrWall)) {
+                        scoreplayer++;
+                        repaint();
+                    }
+
+                    ball.move.changeX();
+                    ball.move.changeY();
+                    brick.takeHit(ball);
+                }
 
                 if (vaChamGach == 1 || vaChamGach == 3) {
                     if (!(brick instanceof BrWall)) {
@@ -233,17 +242,6 @@ public class GamePanel extends JPanel implements Runnable{
                     ball.move.changeY();
                     brick.takeHit(ball);
                 }
-                if(vaChamGach == 5) {
-                    if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
-                        repaint();
-                    }
-
-                    ball.move.changeX();
-                    ball.move.changeY();
-                    brick.takeHit(ball);
-                }
-
                 break;
             }
 
@@ -251,6 +249,7 @@ public class GamePanel extends JPanel implements Runnable{
                 map.list.remove(i);
                 i--;
             }
+
         }
 
         //Va cham voi PowerUp

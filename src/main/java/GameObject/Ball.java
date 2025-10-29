@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-public class Ball extends GameObject{
+public class Ball extends GameObject {
 
     GamePanel gp;
     KeyHandler keyH;
@@ -44,14 +44,13 @@ public class Ball extends GameObject{
     }
 
     public void initPos() {
-        posX = (double) gp.screenWidth / 2;
-        posY = (double) gp.screenHeight - 150 - 8;
+        posX = (double) (gp.screenWidth - width) / 2;
+        posY = (double) (gp.screenHeight - 150 - height);
 
         speed = 10;
 
         move = new Vector2D();
 
-//        move.angle = rand.nextInt(90 - 60 + 1) + 60;
         move.angle = 45;
 
         isPlay = false;
@@ -65,23 +64,23 @@ public class Ball extends GameObject{
 
         posX += move.x;
         posY += move.y;
-        //neu bong ra khoi man hinh ben tren
-        if((int) (posY - radius) < 0) {
-            posY = radius;
+
+        //neu bong bay ra khoi man hinh
+        if(posY < 0) {
+            posY = 0;
             move.changeY();
         }
-       //neu bong ra khoi man hinh ben trai
-        if((int) (posX - radius) < 0) {
-            posX = radius;
-            move.changeX();
-        }
-        //neu bong ra khoi man hinh ben phai
-        if((int) posX > gp.screenWidth - radius) {
-            posX = gp.screenWidth - radius;
+
+        if(posX < 0) {
+            posX = 0;
             move.changeX();
         }
 
-        //Di chuyen trai phai luc bat dau
+        if((int) posX + width > gp.screenWidth) {
+            posX = gp.screenWidth - width;
+            move.changeX();
+        }
+
         if(!isPlay) {
             if(keyH.rightPressed) {
                 posX += 4;
@@ -89,18 +88,18 @@ public class Ball extends GameObject{
             if(keyH.leftPressed) {
                 posX -= 4;
             }
-            //chua hieu
-            if(posX < (double) (gp.originalTileSize * 5 - 10) / 2) {
-                posX = (double) (gp.originalTileSize * 5 - 10) / 2;
+
+            if(posX < (double) (gp.originalTileSize * 5 - 10 - width) / 2) {
+                posX = (double) (gp.originalTileSize * 5 - 10 - width) / 2;
             }
-            if(posX > gp.screenWidth - (double) (gp.originalTileSize * 5 - 10) / 2) {
-                posX = gp.screenWidth - (double) (gp.originalTileSize * 5 - 10) / 2;
+
+            if(posX > gp.screenWidth - (double) (gp.originalTileSize * 5 - 10 - width) / 2) {
+                posX = gp.screenWidth - (double) (gp.originalTileSize * 5 - 10 - width) / 2;
             }
         }
     }
 
     public void render(Graphics2D g2) {
-        g2.drawImage(image, (int) posX - radius, (int) posY - radius, width, height, null);
+        g2.drawImage(image, (int) posX, (int) posY, width, height, null);
     }
-
 }
