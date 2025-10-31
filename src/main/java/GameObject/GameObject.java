@@ -5,58 +5,52 @@ public class GameObject {
     public int width, height;
     public int speed;
 
-    public static int isCollideBnR(GameObject cir, GameObject rec) {
-        double closeX = cir.posX;
-        double closeY = cir.posY;
-        int r = cir.width / 2;
+    public static boolean isCollide(GameObject obj1, GameObject obj2) {
+        return  obj1.posX + obj1.width >= obj2.posX &&
+                obj2.posX + obj2.width >= obj1.posX &&
+                obj1.posY + obj1.height >= obj2.posY &&
+                obj2.posY + obj2.height >= obj1.posY;
+    }
 
-        //tim canh gan nhat cua hinh hcn voi hinh tron
-        if(cir.posX > rec.posX + rec.width) {
-            closeX = rec.posX + rec.width;          //ben phai (3)
-        } else if (cir.posX < rec.posX) {
-            closeX = rec.posX;                      //ben trai (1)
+    public static int typeCollideBnR(Ball ball, GameObject brick) {
+        double closeX = ball.posX;
+        double closeY = ball.posY;
+
+        if(ball.posX >= brick.posX + brick.width) {
+            closeX = brick.posX + brick.width;                  //phai (3)
+        } else if(ball.posX + ball.width <= brick.posX) {
+            closeX = brick.posX;                                //trai (1)
         }
 
-        if(cir.posY > rec.posY + rec.height) {
-            closeY = rec.posY + rec.height;         //ben duoi (4)
-        } else if (cir.posY < rec.posY) {
-            closeY = rec.posY;                      //ben tren (2)
+        if(ball.posY + ball.height <= brick.posY) {
+            closeY = brick.posY;                                //tren (2)
+        } else if(ball.posY >= brick.posY + brick.height) {
+            closeY = brick.posY + brick.height;                 //duoi (4)
         }
 
-        //Tinh khoang cach tu tam qua bong den canh gan nhat cua gach/paddle
-        double distX = closeX - cir.posX;
-        double distY = closeY - cir.posY;
-        double distance = (distX * distX) + (distY * distY);
+        double distX = closeX - ball.posX;
+        double distY = closeY - ball.posY;
 
-        if(distance <= r * r) {
-            //va cham vao goc
+        if(isCollide(ball, brick)) {
             if(distX != 0 && distY != 0) {
                 return 5;
             }
 
-            if(distY == 0) {
-                if(closeX - rec.posX == 0) {
-                    return 1;
-                } else {
-                    return 3;
-                }
-            }
-
-            if(distX == 0){
-                if(closeY - rec.posY == 0) {
+            if(distX == 0) {
+                if(closeY == brick.posY) {
                     return 2;
                 } else {
                     return 4;
                 }
             }
-        }
-        return 0;
-    }
 
-    public static boolean isCollideRnR(GameObject rec1, GameObject rec2) {
-        return  rec1.posX + rec1.width >= rec2.posX &&
-                rec2.posX + rec2.width >= rec1.posX &&
-                rec1.posY + rec1.height >= rec2.posY &&
-                rec2.posY + rec2.height >= rec1.posY;
+            if(closeX == brick.posX) {
+                return 1;
+            } else {
+                return 3;
+            }
+        }
+
+        return 0;
     }
 }
