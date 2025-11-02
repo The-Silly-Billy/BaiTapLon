@@ -1,5 +1,7 @@
 package GameObject;
 
+import GameObject.Brick.Brick;
+
 public class GameObject {
     public double posX,posY;
     public int width, height;
@@ -12,45 +14,137 @@ public class GameObject {
                 obj2.posY + obj2.height >= obj1.posY;
     }
 
-    public static int typeCollideBnR(Ball ball, GameObject brick) {
-        double closeX = ball.posX;
-        double closeY = ball.posY;
+    public static int typeCollideBnR(Ball ball, GameObject rect) {
+        double ballCenterX = ball.posX + ball.width / 2.0;
+        double ballCenterY = ball.posY + ball.height / 2.0;
 
-        if(ball.posX >= brick.posX + brick.width) {
-            closeX = brick.posX + brick.width;                  //phai (3)
-        } else if(ball.posX + ball.width <= brick.posX) {
-            closeX = brick.posX;                                //trai (1)
+        double closeX = ballCenterX;
+        double closeY = ballCenterY;
+
+        if(ballCenterX > rect.posX + rect.width) {
+            closeX = rect.posX + rect.width;                    //phai (3)
+        } else if(ballCenterX < rect.posX) {
+            closeX = rect.posX;                                 //trai (1)
         }
 
-        if(ball.posY + ball.height <= brick.posY) {
-            closeY = brick.posY;                                //tren (2)
-        } else if(ball.posY >= brick.posY + brick.height) {
-            closeY = brick.posY + brick.height;                 //duoi (4)
+        if(ballCenterY < rect.posY) {
+            closeY = rect.posY;                                 //tren (2)
+        } else if(ballCenterY > rect.posY + rect.height) {
+            closeY = rect.posY + rect.height;                   //duoi (4)
         }
 
-        double distX = closeX - ball.posX;
-        double distY = closeY - ball.posY;
+        double distX = closeX - ballCenterX;
+        double distY = closeY - ballCenterY;
 
-        if(isCollide(ball, brick)) {
-            if(distX != 0 && distY != 0) {
+        if(isCollide(ball, rect)) {
+            if(Math.abs(distX) > 0 && Math.abs(distY) > 0) {
                 return 5;
             }
 
-            if(distX == 0) {
-                if(closeY == brick.posY) {
+            if(Math.abs(distX) > Math.abs(distY)) {
+                if(closeX == rect.posX) {
+                    return 1;
+                } else {
+                    return 3;
+                }
+            } else {
+                if(closeY == rect.posY) {
                     return 2;
                 } else {
                     return 4;
                 }
             }
-
-            if(closeX == brick.posX) {
-                return 1;
-            } else {
-                return 3;
-            }
         }
 
         return 0;
+    }
+
+    public static void interact(Ball ball, Brick brick) {
+        switch(typeCollideBnR(ball, brick)) {
+            case 1:
+                if(ball.move.x > 0) {
+                    ball.move.changeX();
+                    System.out.println(1);
+                }
+                break;
+
+            case 2:
+                if(ball.move.y > 0) {
+                    ball.move.changeY();
+                    System.out.println(2);
+                }
+                break;
+
+            case 3:
+                if(ball.move.x < 0) {
+                    ball.move.changeX();
+                    System.out.println(3);
+                }
+                break;
+
+            case 4:
+                if(ball.move.y < 0) {
+                    ball.move.changeY();
+                    System.out.println(4);
+                }
+                break;
+
+            case 5:
+                //sai so va cham goc la 5.0 pixels
+                boolean left = Math.abs((ball.posX + ball.width) - brick.posX) < 5.0;
+                boolean right = Math.abs(ball.posX - (brick.posX + brick.width)) < 5.0;
+                boolean top = Math.abs((ball.posY + ball.height) - brick.posY) < 5.0;
+                boolean bottom = Math.abs(ball.posY - (brick.posY + brick.height)) < 5.0;
+
+                if(top && left) {
+                    if(ball.move.x < 0 && ball.move.y > 0) {
+                        ball.move.changeY();
+                    } else if(ball.move.x > 0 && ball.move.y < 0) {
+                        ball.move.changeX();
+                    } else {
+                        ball.move.changeX();
+                        ball.move.changeY();
+                    }
+                    System.out.println("top-left");
+                } else if(top && right) {
+                    if(ball.move.x < 0 && ball.move.y < 0) {
+                        ball.move.changeX();
+                    } else if(ball.move.x > 0 && ball.move.y > 0) {
+                        ball.move.changeY();
+                    } else {
+                        ball.move.changeX();
+                        ball.move.changeY();
+                    }
+                    System.out.println("top-right");
+                } else if(bottom && left) {
+                    if(ball.move.x < 0 && ball.move.y < 0) {
+                        ball.move.changeY();
+                    } else if(ball.move.x > 0 && ball.move.y > 0) {
+                        ball.move.changeX();
+                    } else {
+                        ball.move.changeX();
+                        ball.move.changeY();
+                    }
+                    System.out.println("bottom-left");
+                } else if(bottom && right) {
+                    if(ball.move.x > 0 && ball.move.y < 0) {
+                        ball.move.changeY();
+                    } else if(ball.move.x < 0 && ball.move.y > 0) {
+                        ball.move.changeX();
+                    } else {
+                        ball.move.changeX();
+                        ball.move.changeY();
+                    }
+                    System.out.println("bottom-right");
+                } else {
+                    ball.move.changeX();
+                    ball.move.changeY();
+                    System.out.println("magic");
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 }

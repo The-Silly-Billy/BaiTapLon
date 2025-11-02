@@ -23,3 +23,18 @@ public class Main {
         gamePanel.startGameThread();
     }
 }
+
+
+/*
+
+## Va Cham Gach - Bong
+
+1. Cac buoc
+
+    FOR tung vien gach:
+        IF vaCham = true:
+            Apply va ly
+            Danh dau gach bi va cham
+    Xoa het cac gach
+
+ */
