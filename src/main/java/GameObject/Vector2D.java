@@ -15,7 +15,6 @@ public class Vector2D {
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
-        updateAngle();
     }
 
 
@@ -27,34 +26,10 @@ public class Vector2D {
 
     public void changeX() {
         x = -x;
-        updateAngle();
     }
 
 
     public void changeY() {
         y = -y;
-        updateAngle();
-    }
-
-
-    public void normalize() {
-        double length = Math.sqrt(x * x + y * y);
-        if (length != 0) {
-            x /= length;
-            y /= length;
-        }
-    }
-
-    public void scale(double factor) {
-        x *= factor;
-        y *= factor;
-    }
-
-    public double dot(Vector2D other) {
-        return this.x * other.x + this.y * other.y;
-    }
-
-    private void updateAngle() {
-        this.angle = (int) Math.toDegrees(Math.atan2(-y, x));
     }
 }

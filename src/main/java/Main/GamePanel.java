@@ -241,7 +241,6 @@ public class GamePanel extends JPanel implements Runnable{
                         repaint();
                     }
 
-                    ball.move.changeX();
                     ball.move.changeY();
                     brick.takeHit(ball);
                 }
