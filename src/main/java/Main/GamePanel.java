@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     //PowerUp
     //hearts
     ArrayList<Heart> heartList=new ArrayList<>();
-    int scoreplayer=0;
+    int scorePlayer=0;
     Font customFont=null;
 
     public GamePanel() {
@@ -217,7 +217,7 @@ public class GamePanel extends JPanel implements Runnable{
             if(vaChamGach != 0 ) {
                 if(vaChamGach == 5) {
                     if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
+                        scorePlayer++;
                         repaint();
                     }
 
@@ -228,7 +228,7 @@ public class GamePanel extends JPanel implements Runnable{
 
                 if (vaChamGach == 1 || vaChamGach == 3) {
                     if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
+                        scorePlayer++;
                         repaint();
                     }
 
@@ -237,7 +237,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 if (vaChamGach == 2 || vaChamGach == 4)  {
                     if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
+                        scorePlayer++;
                         repaint();
                     }
 
@@ -253,7 +253,6 @@ public class GamePanel extends JPanel implements Runnable{
                 map.list.remove(i);
                 i--;
             }
-
         }
 
         //Va cham voi PowerUp
@@ -298,7 +297,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 g2.setColor(Color.white);
 
-                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
+                g2.drawString("Score : "+scorePlayer,screenWidth-100,screenHeight -40);
                 break;
             case GAME_OVER:
                 //Game over
@@ -316,7 +315,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 g2.setColor(Color.white);
 
-                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
+                g2.drawString("Score : "+scorePlayer,screenWidth-100,screenHeight -40);
                 pauseGame.draw(g2);
                 break;
 
