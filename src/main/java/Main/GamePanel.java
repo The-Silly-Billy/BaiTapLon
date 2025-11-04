@@ -6,17 +6,14 @@ import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.Heart;
-import GameObject.PowerUp.PowerUp;
 import GameUI.PauseGame;
 import GameUI.StartMenu;
 import GameUI.GameState;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -44,6 +41,8 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
 
     KeyHandler keyH = new KeyHandler(this);
+    Sound sound = new Sound();
+
     Thread gameThread;
 
     Random rand = new Random();
@@ -81,11 +80,9 @@ public class GamePanel extends JPanel implements Runnable{
             System.out.println("loi");
         }
     }
-    //ham add 3 oject heart vao list
-    public void setupHearts(){
-        for (int i = 0;i < 3; i++){
-            heartList.add(new Heart(this,10 + 50 * i,screenHeight - 50));//posY lay toa do bang cach thu
-        }
+
+    public void setupGame() {
+        playMusic(0);
     }
 
     public void startGameThread() {
@@ -117,6 +114,25 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    public GameState getState() {
+        return this.state;
+    }
+
+    public StartMenu getMenu() {
+        return menu;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    //ham add 3 oject heart vao list
+    public void setupHearts(){
+        for (int i = 0;i < 3; i++){
+            heartList.add(new Heart(this,10 + 50 * i,screenHeight - 50));//posY lay toa do bang cach thu
+        }
+    }
+
     public void update() {
 
         switch (state) {
@@ -142,7 +158,6 @@ public class GamePanel extends JPanel implements Runnable{
         int vaChamVan = GameObject.typeCollideBnR(ball, paddle);
 
         if(vaChamVan == 2) {
-
             ball.move.changeY();
             if(ball.move.x >= 0) {
                 if(keyH.rightPressed) {
@@ -239,6 +254,7 @@ public class GamePanel extends JPanel implements Runnable{
                 ball.initPos();
                 paddle.initPos();
             }
+            //Game Over
             ball.initPos();
             paddle.initPos();
         }
@@ -295,15 +311,19 @@ public class GamePanel extends JPanel implements Runnable{
         g2.dispose();
     }
 
-    public GameState getState() {
-        return this.state;
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
     }
 
-    public StartMenu getMenu() {
-        return menu;
+    public void stopMusic() {
+        sound.stop();
     }
 
-    public void setState(GameState state) {
-        this.state = state;
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
+
 }
