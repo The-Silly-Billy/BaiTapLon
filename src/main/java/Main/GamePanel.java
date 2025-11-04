@@ -6,17 +6,14 @@ import GameObject.GameObject;
 import GameObject.Ball;
 import GameObject.Paddle;
 import GameObject.Heart;
-import GameObject.PowerUp.PowerUp;
 import GameUI.PauseGame;
 import GameUI.StartMenu;
 import GameUI.GameState;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -33,9 +30,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int screenWidth = tileSize * maxScreenCol;        //576 pixels
     public final int screenHeight = tileSize * maxScreenRow;       //768 pixels
-
-    //576-40= 536 rong
-    //150-16-10 = 124 cao
 
     StartMenu menu = new StartMenu(this);
     PauseGame pauseGame = new PauseGame(this);
@@ -59,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Brick Map
     Map4 map = new Map4( this);
     //PowerUp
-    //hearts
+    //Hearts
     ArrayList<Heart> heartList=new ArrayList<>();
     int scorePlayer=0;
     Font customFont=null;
@@ -68,10 +62,10 @@ public class GamePanel extends JPanel implements Runnable{
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
-        this.setDoubleBuffered(true);       //de tim hieu them ^^
+        this.setDoubleBuffered(true);
 
         this.addKeyListener(keyH);
-        this.setFocusable(true);//de tim hieu them ^^
+        this.setFocusable(true);
 
         setupHearts();
         try {
