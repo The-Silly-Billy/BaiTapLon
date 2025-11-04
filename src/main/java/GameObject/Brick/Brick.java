@@ -25,7 +25,7 @@ public class Brick extends GameObject {
     }
 
     public boolean isDestroy() {
-        if(!isWall && hitPoints <= 0) {
+        if (!isWall && hitPoints <= 0) {
             return true;
         }
         return false;

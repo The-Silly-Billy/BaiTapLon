@@ -16,21 +16,22 @@ public class Map1 {
     public Map1(GamePanel gp) {
         this.gp = gp;
 
-        for(int i = 0; i <= 720; i += 48) {
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrBrown(gp, i, 100));
         }
-        for(int i = 0; i <= 720; i += 48) {
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrRed(gp, i, 125));
         }
-        for(int i = 0; i <= 720; i += 48) {
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrBlue(gp, i, 150));
         }
-        for(int i = 0; i <= 720; i += 48) {
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrGray(gp, i, 175));
         }
-        for(int i = 0; i <= 720; i += 48) {
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrPink(gp, i, 200));
-        }for(int i = 0; i <= 720; i += 48) {
+        }
+        for (int i = 0; i <= 720; i += 48) {
             list.add(new BrGreen(gp, i, 225));
         }
 
