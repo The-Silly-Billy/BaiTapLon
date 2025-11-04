@@ -33,18 +33,20 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int screenWidth = tileSize * maxScreenCol;        //576 pixels
     public final int screenHeight = tileSize * maxScreenRow;       //768 pixels
-    private GameState state = GameState.MENU;
 
     //576-40= 536 rong
     //150-16-10 = 124 cao
 
     StartMenu menu = new StartMenu(this);
     PauseGame pauseGame = new PauseGame(this);
+    private GameState state = GameState.MENU;
+
     //FPS
     int FPS = 60;
 
     KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
+    Sound sound = new Sound();
 
     Random rand = new Random();
 
@@ -57,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
     //PowerUp
     //hearts
     ArrayList<Heart> heartList=new ArrayList<>();
-    int scoreplayer=0;
+    int scorePlayer=0;
     Font customFont=null;
 
     public GamePanel() {
@@ -81,11 +83,9 @@ public class GamePanel extends JPanel implements Runnable{
             System.out.println("loi");
         }
     }
-    //ham add 3 oject heart vao list
-    public void setupHearts(){
-        for (int i=0;i<3;i++){
-            heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
-        }
+
+    public void setupGame(){
+        playMusic(0);
     }
 
     public void startGameThread() {
@@ -117,6 +117,29 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    public GameState getGameState() {
+        return this.state;
+    }
+
+    public StartMenu getMenu() {
+        return menu;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    public PauseGame getPauseGame() {
+        return this.pauseGame;
+    }
+
+    //Ham add 3 object heart vao list
+    public void setupHearts(){
+        for (int i=0;i<3;i++){
+            heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+        }
+    }
+
     public void update() {
 
         switch (state) {
@@ -128,7 +151,6 @@ public class GamePanel extends JPanel implements Runnable{
                 ball.update();
                 break;
             case GAME_OVER:
-                // handle game over later
                 break;
             case QUIT:
                 System.exit(0);
@@ -149,10 +171,11 @@ public class GamePanel extends JPanel implements Runnable{
                     if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
-                    }
-                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
+                    } else {
+                        ball.move.changeX();
                     }
                 }
 
@@ -177,10 +200,11 @@ public class GamePanel extends JPanel implements Runnable{
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
-                    }
-                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    } else {
                         ball.move.changeX();
                     }
                 }
@@ -212,48 +236,17 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i < map.list.size(); i++) {
             Brick brick = map.list.get(i);
 
-            int vaChamGach = GameObject.typeCollideBnR(ball, brick);
-
-            if(vaChamGach != 0 ) {
-                if(vaChamGach == 5) {
-                    if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
-                        repaint();
-                    }
-
-                    ball.move.changeX();
-                    ball.move.changeY();
-                    brick.takeHit(ball);
-                }
-
-                if (vaChamGach == 1 || vaChamGach == 3) {
-                    if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
-                        repaint();
-                    }
-
-                    ball.move.changeX();
-                    brick.takeHit(ball);
-                }
-                if (vaChamGach == 2 || vaChamGach == 4)  {
-                    if (!(brick instanceof BrWall)) {
-                        scoreplayer++;
-                        repaint();
-                    }
-
-                    ball.move.changeX();
-                    ball.move.changeY();
-                    brick.takeHit(ball);
-                }
-
-                break;
+            if(GameObject.isCollide(ball, brick)) {
+                GameObject.interact(ball, brick);
+                brick.takeHit(ball);
             }
 
             if (brick.isDestroy()) {
+                scorePlayer++;
+                repaint();
                 map.list.remove(i);
                 i--;
             }
-
         }
 
         //Va cham voi PowerUp
@@ -268,6 +261,7 @@ public class GamePanel extends JPanel implements Runnable{
                 ball.initPos();
                 paddle.initPos();
             }
+            //Game Over
             ball.initPos();
             paddle.initPos();
         }
@@ -298,7 +292,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 g2.setColor(Color.white);
 
-                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
+                g2.drawString("Score : "+scorePlayer,screenWidth-100,screenHeight -40);
                 break;
             case GAME_OVER:
                 //Game over
@@ -316,7 +310,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 g2.setColor(Color.white);
 
-                g2.drawString("Score : "+scoreplayer,screenWidth-100,screenHeight -40);
+                g2.drawString("Score : "+scorePlayer,screenWidth-100,screenHeight -40);
                 pauseGame.draw(g2);
                 break;
 
@@ -324,37 +318,27 @@ public class GamePanel extends JPanel implements Runnable{
         g2.dispose();
     }
 
-    public GameState getGameState() {
-        return this.state;
-    }
-
-    public StartMenu getMenu() {
-        return menu;
-    }
-
-    public void setState(GameState state) {
-        this.state = state;
-    }
-
-    public PauseGame getPauseGame() {
-        return this.pauseGame;
-    }
-
     public void resetGame() {
-        // Reset ball position
         ball.initPos();
-        
-        // Reset paddle position
         paddle.initPos();
-        
-        // Reset hearts
         heartList.clear();
         setupHearts();
-        
-        // Reset map (create new map)
         map = new Map4(this);
-        
-        // Reset score
-        scoreplayer = 0;
+        scorePlayer = 0;
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }
