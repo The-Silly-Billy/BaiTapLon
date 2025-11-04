@@ -45,8 +45,10 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
 
     KeyHandler keyH = new KeyHandler(this);
-    Thread gameThread;
     Sound sound = new Sound();
+    Background background = new Background(this);
+
+    Thread gameThread;
 
     Random rand = new Random();
 
@@ -135,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Ham add 3 object heart vao list
     public void setupHearts(){
-        for (int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++){
             heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
         }
     }
@@ -273,6 +275,8 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
+
+        background.render(g2);
 
         switch (state) {
             case MENU:
