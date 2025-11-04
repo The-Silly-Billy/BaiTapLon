@@ -83,8 +83,8 @@ public class GamePanel extends JPanel implements Runnable{
     }
     //ham add 3 oject heart vao list
     public void setupHearts(){
-        for (int i=0;i<3;i++){
-            heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+        for (int i = 0;i < 3; i++){
+            heartList.add(new Heart(this,10 + 50 * i,screenHeight - 50));//posY lay toa do bang cach thu
         }
     }
 
@@ -149,10 +149,11 @@ public class GamePanel extends JPanel implements Runnable{
                     if(ball.posX + ball.radius >= paddle.posX && ball.posX + ball.radius <= paddle.posX + ((double) paddle.width) / 4) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
-                    }
-                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
+                    } else {
+                        ball.move.changeX();
                     }
                 }
 
@@ -177,10 +178,11 @@ public class GamePanel extends JPanel implements Runnable{
                         ball.move.angle = rand.nextInt(ball.move.angle - 10 + 1) + 10;
                         ball.move.changeVal(ball.speed);
                         ball.move.changeX();
-                    }
-                    if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
+                    } else if(ball.posX + ball.radius >= paddle.posX + ((double) (paddle.width * 3) / 4) && ball.posX + ball.radius <= paddle.posX + paddle.width) {
                         ball.move.angle = rand.nextInt(90 - ball.move.angle + 1) + ball.move.angle;
                         ball.move.changeVal(ball.speed);
+                        ball.move.changeX();
+                    } else {
                         ball.move.changeX();
                     }
                 }
