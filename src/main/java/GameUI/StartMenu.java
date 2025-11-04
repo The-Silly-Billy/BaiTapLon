@@ -62,6 +62,7 @@ public class StartMenu {
                 buttonNumber = 0; // wrap around to first
             resetButtons();
             buttons[buttonNumber].setKeyOn(true);
+            gp.playSE(3);
         }
 
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -70,6 +71,7 @@ public class StartMenu {
                 buttonNumber = buttons.length - 1; // wrap around to last
             resetButtons();
             buttons[buttonNumber].setKeyOn(true);
+            gp.playSE(3);
         }
 
         if (code == KeyEvent.VK_ENTER) {

@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
     Map4 map = new Map4( this);
     //PowerUp
     //Hearts
-    ArrayList<Heart> heartList=new ArrayList<>();
+    public ArrayList<Heart> heartList=new ArrayList<>();
     int scorePlayer=0;
     Font customFont=null;
 
@@ -138,6 +138,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
+        if(heartList.isEmpty()) {
+            setState(GameState.MENU);
+        }
         switch (state) {
             case MENU:
                 menu.update();
@@ -233,6 +236,7 @@ public class GamePanel extends JPanel implements Runnable{
             Brick brick = map.list.get(i);
 
             if(GameObject.isCollide(ball, brick)) {
+                playSE(4);
                 GameObject.interact(ball, brick);
                 brick.takeHit(ball);
             }

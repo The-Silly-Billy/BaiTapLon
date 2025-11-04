@@ -75,32 +75,25 @@ public class PauseGame {
     private void handleButtonAction(int buttonIndex, GameState buttonState) {
         switch (buttonState) {
             case MUTED:
-                // Toggle music on/off for the specific button
                 toggleMusic(buttonIndex);
                 break;
             case MENU:
-                // Distinguish between home button (index 2) and restart button (index 4)
                 if (buttonIndex == 2) {
-                    // Home button - go back to menu
                     gp.setState(MENU);
                 } else if (buttonIndex == 4) {
-                    // Restart button - restart game and go to menu
                     gp.resetGame();
-                    gp.setState(MENU);
+                    gp.setState(PLAYING);
                 }
                 break;
             case PLAYING:
-                // Resume game
                 gp.setState(PLAYING);
                 break;
             default:
-                // Handle other states if needed
                 break;
         }
     }
 
     private void toggleMusic(int buttonIndex) {
-        // Toggle the specific button's mute state
         if (buttonIndex == 0) {
             musicButton0Muted = !musicButton0Muted;
             String newImageSource = musicButton0Muted ? LoadMat.MUSIC_OFF : LoadMat.MUSIC_ON;
@@ -112,11 +105,9 @@ public class PauseGame {
             buttons[1].setSource(newImageSource);
             System.out.println("Music Button 1 " + (musicButton1Muted ? "muted" : "unmuted"));
         }
-        // TODO: Implement actual music toggle functionality when audio system is added
     }
 
     public boolean isMusicMuted() {
-        // Return true if either button is muted (or implement separate checks if needed)
         return musicButton0Muted || musicButton1Muted;
     }
 
@@ -137,6 +128,7 @@ public class PauseGame {
                 buttonNumber = 0; // wrap around to first
             resetButtons();
             buttons[buttonNumber].setKeyOn(true);
+            gp.playSE(3);
         }
 
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -145,13 +137,13 @@ public class PauseGame {
                 buttonNumber = buttons.length - 1; // wrap around to last
             resetButtons();
             buttons[buttonNumber].setKeyOn(true);
+            gp.playSE(3);
         }
 
         if (code == KeyEvent.VK_ENTER) {
             Button selectedButton = buttons[buttonNumber];
             GameState buttonState = selectedButton.getState();
             
-            // Perform action based on button state and index
             handleButtonAction(buttonNumber, buttonState);
         }
         if (code == KeyEvent.VK_ESCAPE) {
