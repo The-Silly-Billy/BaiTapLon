@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Ham add 3 object heart vao list
     public void setupHearts(){
         for (int i = 0; i < 3; i++){
-            heartList.add(new Heart(this,10+50*i,screenHeight-50));//posY lay toa do bang cach thu
+            heartList.add(new Heart(this,10 + 30 * i,screenHeight - 50));//posY lay toa do bang cach thu
         }
     }
 

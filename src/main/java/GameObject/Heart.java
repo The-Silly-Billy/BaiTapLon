@@ -16,11 +16,11 @@ public class Heart extends GameObject{
         this.posX=posX;
         this.posY=posY;
 
-        width = gp.originalTileSize * 2;
-        height = gp.originalTileSize;
+        width = 22;
+        height = 22;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/heart.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/Heart.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
