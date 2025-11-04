@@ -17,9 +17,12 @@ public class KeyHandler implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if(gamePanel.getState() == GameState.MENU) {
+        if(gamePanel.getGameState() == GameState.MENU) {
             gamePanel.getMenu().keyPressed(e);
-        } else if (gamePanel.getState() == GameState.PLAYING) {
+        } else if (gamePanel.getGameState() == GameState.PAUSED) {
+            gamePanel.getPauseGame().keyPressed(e);
+        }
+        else if (gamePanel.getGameState() == GameState.PLAYING) {
             int code = e.getKeyCode();
 
             if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {

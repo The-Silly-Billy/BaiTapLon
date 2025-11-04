@@ -1,23 +1,22 @@
 package GameUI;
 
-import GameUI.Button;
 import Main.GamePanel;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-import static GameUI.GameState.MENU;
-import static GameUI.GameState.PAUSED;
+import static GameUI.GameState.*;
 
 public class PauseGame {
     private Button[] buttons = new Button[5];
     private BufferedImage backgroundImg;
-    private BufferedImage[] imgs;
-    private GamePanel gamePanel;
+    private GamePanel gp;
     public GameState state = PAUSED;
     private int buttonNumber = 0;
     private int pauseMenuX, pauseMenuY;
+    private boolean musicButton0Muted = false;  // State for buttons[0]
+    private boolean musicButton1Muted = false;  // State for buttons[1]
 
     private static final int PAUSE_MENU_WIDTH = 360;
     private static final int PAUSE_MENU_HEIGHT = 524;
@@ -25,7 +24,7 @@ public class PauseGame {
     private static final int yCenterOffset = PAUSE_MENU_HEIGHT / 2;
 
     public PauseGame( GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+        this.gp = gamePanel;
         this.pauseMenuX = (int) (gamePanel.screenWidth / 2 - xCenterOffset);
         this.pauseMenuY = (int) (gamePanel.screenHeight / 2 - yCenterOffset);
         loadButtons();
@@ -33,11 +32,12 @@ public class PauseGame {
     }
 
     private void loadButtons() {
-        buttons[0] = new Button(pauseMenuX + 236, pauseMenuY + 161,0, LoadMat.MUSIC_ON, PAUSED);
-        buttons[1] = new Button(pauseMenuX + 236, pauseMenuY + 219,0, LoadMat.MUSIC_ON, PAUSED);
-        buttons[2] = new Button(pauseMenuX + 47, pauseMenuY + 414,0, LoadMat.HOME_BUTTON, PAUSED);
-        buttons[3] = new Button(pauseMenuX + 148, pauseMenuY + 414,0, LoadMat.PLAY, PAUSED);
-        buttons[4] = new Button(pauseMenuX + 249, pauseMenuY + 414,0, LoadMat.RESTART,PAUSED);
+        buttons[0] = new Button(pauseMenuX + 236, pauseMenuY + 219,0, LoadMat.MUSIC_ON, MUTED, gp);
+        buttons[1] = new Button(pauseMenuX + 236, pauseMenuY + 161,0, LoadMat.MUSIC_ON, MUTED, gp);
+        buttons[2] = new Button(pauseMenuX + 47, pauseMenuY + 414,0, LoadMat.HOME_BUTTON, MENU,gp);
+        buttons[3] = new Button(pauseMenuX + 148, pauseMenuY + 414,0, LoadMat.PLAY, PLAYING, gp);
+        buttons[4] = new Button(pauseMenuX + 249, pauseMenuY + 414,0, LoadMat.RESTART,MENU, gp);
+        buttons[0].setKeyOn(true);
         for(Button b : buttons) {
             b.setScale(2);
         }
@@ -65,6 +65,97 @@ public class PauseGame {
 
         for(Button pause : buttons) {
             pause.draw(g);
+        }
+    }
+
+    public void setState( GameState state) {
+        this.state = state;
+    }
+
+    private void handleButtonAction(int buttonIndex, GameState buttonState) {
+        switch (buttonState) {
+            case MUTED:
+                // Toggle music on/off for the specific button
+                toggleMusic(buttonIndex);
+                break;
+            case MENU:
+                // Distinguish between home button (index 2) and restart button (index 4)
+                if (buttonIndex == 2) {
+                    // Home button - go back to menu
+                    gp.setState(MENU);
+                } else if (buttonIndex == 4) {
+                    // Restart button - restart game and go to menu
+                    gp.resetGame();
+                    gp.setState(MENU);
+                }
+                break;
+            case PLAYING:
+                // Resume game
+                gp.setState(PLAYING);
+                break;
+            default:
+                // Handle other states if needed
+                break;
+        }
+    }
+
+    private void toggleMusic(int buttonIndex) {
+        // Toggle the specific button's mute state
+        if (buttonIndex == 0) {
+            musicButton0Muted = !musicButton0Muted;
+            String newImageSource = musicButton0Muted ? LoadMat.MUSIC_OFF : LoadMat.MUSIC_ON;
+            buttons[0].setSource(newImageSource);
+            System.out.println("Music Button 0 " + (musicButton0Muted ? "muted" : "unmuted"));
+        } else if (buttonIndex == 1) {
+            musicButton1Muted = !musicButton1Muted;
+            String newImageSource = musicButton1Muted ? LoadMat.MUSIC_OFF : LoadMat.MUSIC_ON;
+            buttons[1].setSource(newImageSource);
+            System.out.println("Music Button 1 " + (musicButton1Muted ? "muted" : "unmuted"));
+        }
+        // TODO: Implement actual music toggle functionality when audio system is added
+    }
+
+    public boolean isMusicMuted() {
+        // Return true if either button is muted (or implement separate checks if needed)
+        return musicButton0Muted || musicButton1Muted;
+    }
+
+    public boolean isMusicButton0Muted() {
+        return musicButton0Muted;
+    }
+
+    public boolean isMusicButton1Muted() {
+        return musicButton1Muted;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+            buttonNumber++;
+            if (buttonNumber >= buttons.length)
+                buttonNumber = 0; // wrap around to first
+            resetButtons();
+            buttons[buttonNumber].setKeyOn(true);
+        }
+
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+            buttonNumber--;
+            if (buttonNumber < 0)
+                buttonNumber = buttons.length - 1; // wrap around to last
+            resetButtons();
+            buttons[buttonNumber].setKeyOn(true);
+        }
+
+        if (code == KeyEvent.VK_ENTER) {
+            Button selectedButton = buttons[buttonNumber];
+            GameState buttonState = selectedButton.getState();
+            
+            // Perform action based on button state and index
+            handleButtonAction(buttonNumber, buttonState);
+        }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.setState(PLAYING);
         }
     }
 

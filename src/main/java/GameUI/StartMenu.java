@@ -21,10 +21,10 @@ public class StartMenu {
     }
 
     private void loadButtons() {
-        buttons[0] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight  / 2 - 2* Button.MENU_B_HEIGHT,0,LoadMat.MENU_BUTTONS, GameState.PLAYING);
+        buttons[0] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight  / 2 - 2 * Button.MENU_B_HEIGHT,0,LoadMat.MENU_BUTTONS, GameState.PLAYING,gp);
         buttons[0].setKeyOn(true);
-        buttons[1] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 - Button.yCenterPoint,1, LoadMat.MENU_BUTTONS,GameState.OPTION);
-        buttons[2] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 + 2* Button.MENU_B_HEIGHT,2, LoadMat.MENU_BUTTONS, GameState.QUIT);
+        buttons[1] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 - Button.yCenterPoint,1, LoadMat.MENU_BUTTONS,GameState.OPTION,gp);
+        buttons[2] = new Button(gp.screenWidth / 2 - Button.xCenterPoint , gp.screenHeight / 2 + Button.MENU_B_HEIGHT,2, LoadMat.MENU_BUTTONS, GameState.QUIT,gp);
     }
 
     public GameState getState() {
@@ -74,7 +74,7 @@ public class StartMenu {
 
         if (code == KeyEvent.VK_ENTER) {
             state = buttons[buttonNumber].getState();
-            this.setState(state);
+//            this.setState(state);
 
             gp.setState(state);
         }
