@@ -6,5 +6,7 @@ public enum GameState {
     PAUSED,
     GAME_OVER,
     OPTION,
+    MUTED,
+    UNMUTED,
     QUIT
 }

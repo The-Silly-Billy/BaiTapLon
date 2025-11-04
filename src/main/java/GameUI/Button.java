@@ -4,13 +4,6 @@ import Main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageFilter;
-
-import GameUI.StartMenu;
-import GameUI.PauseGame;
-
-import static GameUI.GameState.MENU;
-import static GameUI.GameState.PAUSED;
 
 public class Button {
     private int xPos, yPos, rowIndex;
@@ -27,8 +20,9 @@ public class Button {
     private static final int PAUSE_B_HEIGHT = 28;
     protected static final int xCenterPoint = MENU_B_WIDTH / 2;
     protected  static final int yCenterPoint = MENU_B_HEIGHT / 2;
+    private boolean isPauseButton;
 
-    public Button(int xPos, int yPos, int rowIndex, String SOURCE, GameState state) {
+    public Button(int xPos, int yPos, int rowIndex, String SOURCE,GameState state,GamePanel gamePanel) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.rowIndex = rowIndex;
@@ -37,45 +31,53 @@ public class Button {
         this.keyPressed = false;
         this.SOURCE = SOURCE;
         this.scale = 1;
+        this.isPauseButton = !SOURCE.equals(LoadMat.MENU_BUTTONS);
         loadImgs();
     }
 
     private void loadImgs() {
         imgs = new BufferedImage[3];
         BufferedImage temp = LoadMat.GetSpriteAtlas(SOURCE);
+        if (temp == null) {
+            System.err.println("Failed to load image: " + SOURCE);
+            return;
+        }
+        
         int w, h;
 
-        // Decide button size based on which state it belongs to
-        if (state == MENU) {
-            w = MENU_B_WIDTH;
-            h = MENU_B_HEIGHT;
-        } else if (state == PAUSED) {
+        if (isPauseButton) {
             w = PAUSE_B_WIDTH;
             h = PAUSE_B_HEIGHT;
         } else {
-            // fallback in case new states are added later
             w = MENU_B_WIDTH;
             h = MENU_B_HEIGHT;
         }
 
-        for (int i = 0; i < imgs.length; i++) {
-            imgs[i] = temp.getSubimage(
-                    i * w,
-                    rowIndex * h,
-                    w,
-                    h
-            );
+        int imageWidth = temp.getWidth();
+        int imageHeight = temp.getHeight();
+        
+        if (imageWidth < w * 3) {
+            BufferedImage singleFrame = temp.getSubimage(0, rowIndex * h,
+                    Math.min(w, imageWidth), Math.min(h, imageHeight - rowIndex * h));
+            for (int i = 0; i < imgs.length; i++) {
+                imgs[i] = singleFrame;
+            }
+        } else {
+            for (int i = 0; i < imgs.length; i++) {
+                imgs[i] = temp.getSubimage(
+                        i * w,
+                        rowIndex * h,
+                        w,
+                        h
+                );
+            }
         }
     }
 
     public void draw( Graphics g) {
         int w, h;
 
-        // Match draw size with the state too
-        if (state == MENU) {
-            w = MENU_B_WIDTH;
-            h = MENU_B_HEIGHT;
-        } else if (state == PAUSED) {
+        if (isPauseButton) {
             w = PAUSE_B_WIDTH;
             h = PAUSE_B_HEIGHT;
         } else {
@@ -124,6 +126,14 @@ public class Button {
         this.scale = scale;
     }
 
+    public void setSource(String newSource) {
+        this.SOURCE = newSource;
+        loadImgs();
+    }
+
+    public String getSource() {
+        return SOURCE;
+    }
 
 
 }
