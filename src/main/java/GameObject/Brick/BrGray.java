@@ -10,7 +10,7 @@ public class BrGray extends Brick {
     public BrGray(GamePanel gp, double posX, double posY) {
         super(gp);
 
-        hitPoints = 1;
+        hitPoints = 4;
 
         this.posX = posX;
         this.posY = posY;
